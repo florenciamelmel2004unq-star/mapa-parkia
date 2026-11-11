@@ -1,0 +1,12 @@
+{
+  "name": "mapa-parkia",
+  "version": "1.0.0",
+  "description": "Mapa de estacionamientos Parkia",
+  "private": true,
+  "scripts": {
+    "dev": "live-server --open=index.html"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
