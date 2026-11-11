@@ -155,10 +155,22 @@
           </div>
 
           <div class="vehicle-picker-popover" id="vehiclePickerPopover">
-            <button type="button" class="vehicle-option-item" data-type="Auto">🚗 Auto</button>
-            <button type="button" class="vehicle-option-item" data-type="Camioneta">🚙 Camioneta / SUV</button>
-            <button type="button" class="vehicle-option-item" data-type="Moto">🏍️ Moto</button>
-            <button type="button" class="vehicle-option-item" data-type="Bicicleta">🚲 Bicicleta</button>
+            <button type="button" class="vehicle-option-item" data-type="Auto">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9C2.1 11.1 2 11.6 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
+              Auto
+            </button>
+            <button type="button" class="vehicle-option-item" data-type="Camioneta">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg>
+              Camioneta / SUV
+            </button>
+            <button type="button" class="vehicle-option-item" data-type="Moto">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="16" r="3"></circle><circle cx="19" cy="16" r="3"></circle><path d="M8 16h7l2-6h-4"></path><path d="M6 16l2-6h4"></path></svg>
+              Moto
+            </button>
+            <button type="button" class="vehicle-option-item" data-type="Bicicleta">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18.5" cy="17.5" r="3.5"></circle><circle cx="5.5" cy="17.5" r="3.5"></circle><circle cx="15" cy="5" r="1"></circle><path d="M12 17.5V14l-3-3 4-3 2 3h2"></path></svg>
+              Bicicleta
+            </button>
           </div>
 
           <div class="floating-chips-row">
@@ -562,7 +574,9 @@
             <h3 id="modalBookingTitle">Reservá tu cochera</h3>
             <span class="modal-header-subtitle">Completá los datos y asegurá tu lugar al instante</span>
           </div>
-          <button type="button" class="btn-close-modal" id="btnCloseModal" aria-label="Cerrar modal">✕</button>
+          <button type="button" class="btn-close-modal" id="btnCloseModal" aria-label="Cerrar modal">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
         </div>
 
         <div class="modal-body-content compact-scroll-body">
@@ -603,7 +617,10 @@
             </div>
 
             <div class="duration-badge-bar">
-              <span class="duration-text">⏱️ Duración estimada: <strong id="lblEstimatedDuration">4 horas</strong></span>
+              <span class="duration-text">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Duración estimada: <strong id="lblEstimatedDuration">4 horas</strong>
+              </span>
             </div>
           </div>
 
@@ -615,7 +632,8 @@
                 <span>Elegí tu plaza de estacionamiento</span>
               </div>
               <span class="current-selected-spot-badge">
-                📍 Plaza: <strong id="lblSelectedCochera">A03 (Nivel -1)</strong>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"></path></svg>
+                Plaza: <strong id="lblSelectedCochera">A03 (Nivel -1)</strong>
               </span>
             </div>
 
@@ -658,9 +676,9 @@
               <div class="form-field-item">
                 <label for="selectBookingVehicleType">Tipo de vehículo</label>
                 <select id="selectBookingVehicleType">
-                  <option value="Auto" selected>🚗 Auto</option>
-                  <option value="Camioneta / SUV">🚙 Camioneta / SUV</option>
-                  <option value="Moto">🏍️ Moto</option>
+                  <option value="Auto" selected>Auto</option>
+                  <option value="Camioneta / SUV">Camioneta / SUV</option>
+                  <option value="Moto">Moto</option>
                 </select>
               </div>
             </div>
