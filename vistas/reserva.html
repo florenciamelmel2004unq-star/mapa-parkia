@@ -3,94 +3,526 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Parkia - Reserva</title>
-  <link rel="stylesheet" href="../css/vistas.css" />
+  <title>Parkia — Reserva tu lugar</title>
+
+  <!-- Tipografía Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/parkia-app.css" />
+  <style>
+    .reserva-page-container {
+      max-width: 860px;
+      margin: 32px auto 60px;
+      padding: 0 20px;
+    }
+    .reserva-flow-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      border: 1px solid #E2E8F0;
+      overflow: hidden;
+    }
+    .reserva-flow-card .modal-stepper-header {
+      padding: 24px 32px 18px;
+    }
+    .reserva-flow-card .step-two-columns {
+      padding: 28px 32px;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 32px;
+    }
+    .reserva-flow-card .step-single-column {
+      padding: 28px 32px;
+    }
+    .reserva-flow-card .modal-step-footer {
+      padding: 18px 32px;
+    }
+    @media (max-width: 768px) {
+      .reserva-flow-card .step-two-columns {
+        grid-template-columns: 1fr;
+        padding: 18px;
+      }
+      .reserva-flow-card .modal-stepper-header {
+        padding: 18px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="app">
-  <header class="header">
-    <span class="logo">Parkia</span>
-    <nav class="nav">
-      <a href="../index.html">Inicio</a>
-      <a href="buscador.html">Buscar</a>
-      <a href="reserva.html" class="active">Reservas</a>
-      <a href="historial.html">Historial</a>
-      <a href="#">Ayuda</a>
-    </nav>
-    <a href="perfil.html" class="avatar">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  <!-- =========================================================================
+       1. HEADER / NAVBAR SUPERIOR
+       ========================================================================= -->
+  <header class="parkia-navbar">
+    <a href="../index.html" class="brand-container" aria-label="Parkia Inicio">
+      <div class="brand-pin-logo">
+        <svg width="24" height="28" viewBox="0 0 24 28" fill="none">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 8.5 12 16 12 16s12-7.5 12-16C24 5.37 18.63 0 12 0z" fill="#F59E0B"/>
+          <path d="M9.5 6.5h3.8a3 3 0 0 1 0 6h-1.8v3.5H9.5V6.5zm2 4.2h1.8a1.2 1.2 0 1 0 0-2.4h-1.8v2.4z" fill="#0F172A"/>
+        </svg>
+      </div>
+      <span class="brand-name">Parkia</span>
     </a>
+
+    <nav class="nav-links-center">
+      <a href="../index.html">Inicio</a>
+      <a href="buscador.html">Estacionamientos</a>
+      <a href="reserva.html" class="active">Cómo funciona</a>
+      <a href="../index.html#ayuda">Ayuda</a>
+    </nav>
+
+    <div class="user-menu-wrapper">
+      <a href="reservas.html" class="user-account-btn" style="text-decoration:none;">
+        <div class="avatar-icon-wrap">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <span>Mi cuenta</span>
+      </a>
+    </div>
   </header>
 
-  <div class="container">
-
-    <div class="section-title">Reserva</div>
-
-    <div class="reserve-card">
-      <div class="reserve-header">
-        <div class="reserve-parking-info">
-          <h3>Parking Corrientes</h3>
-          <p>Av. Corrientes 1234, CABA</p>
+  <!-- =========================================================================
+       2. CONTENEDOR PRINCIPAL: FLUJO DE RESERVA MULTI-PASO
+       ========================================================================= -->
+  <main class="reserva-page-container">
+    <div class="reserva-flow-card">
+      
+      <!-- STEPPER HEADER -->
+      <div class="modal-stepper-header">
+        <div class="modal-title-row">
+          <h2 style="font-size:1.4rem; font-weight:800; color:#0F172A; margin:0;">Reserva tu lugar</h2>
+          <a href="buscador.html" style="color:#64748B; text-decoration:none; font-size:13px; font-weight:700;">Volver al mapa ✕</a>
         </div>
-        <div class="reserve-price">$2.500 <span>/ hora</span></div>
+
+        <div class="stepper-progress-bar">
+          <div class="step-indicator active" id="stepIndicator1">
+            <div class="step-circle">1</div>
+            <span class="step-label">Fecha y horario</span>
+          </div>
+          <div class="step-line" id="stepLine1"></div>
+          <div class="step-indicator" id="stepIndicator2">
+            <div class="step-circle">2</div>
+            <span class="step-label">Selección de espacio</span>
+          </div>
+          <div class="step-line" id="stepLine2"></div>
+          <div class="step-indicator" id="stepIndicator3">
+            <div class="step-circle">3</div>
+            <span class="step-label">Datos del vehículo</span>
+          </div>
+          <div class="step-line" id="stepLine3"></div>
+          <div class="step-indicator" id="stepIndicator4">
+            <div class="step-circle">4</div>
+            <span class="step-label">Confirmación</span>
+          </div>
+        </div>
       </div>
 
-      <div class="reserve-body">
-        <h3>Seleccioná fecha y horario</h3>
+      <!-- PASO 1: FECHA Y HORARIO -->
+      <div class="modal-step-panel active" id="modalStep1">
+        <div class="step-two-columns">
+          
+          <div class="step-col-calendar">
+            <h4 class="step-col-title">Seleccioná la fecha</h4>
+            <div class="mini-calendar-widget">
+              <div class="calendar-nav-bar">
+                <button type="button" class="cal-nav-btn">‹</button>
+                <span class="cal-month-title">Noviembre 2026</span>
+                <button type="button" class="cal-nav-btn">›</button>
+              </div>
+              <div class="calendar-weekdays">
+                <span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span><span>Do</span>
+              </div>
+              <div class="calendar-days-grid" id="calendarDaysGrid">
+                <!-- Días generados por JS -->
+              </div>
+            </div>
+          </div>
 
-        <div class="form-group">
-          <label>Fecha</label>
-          <input type="date" value="2026-09-09" />
+          <div class="step-col-slots">
+            <h4 class="step-col-title">Elegí el horario</h4>
+            <div class="time-slots-list" id="timeSlotsList">
+              <button type="button" class="time-slot-btn" data-time="08:00 - 12:00">08:00 - 12:00</button>
+              <button type="button" class="time-slot-btn active" data-time="14:00 - 18:00">14:00 - 18:00</button>
+              <button type="button" class="time-slot-btn" data-time="16:00 - 20:00">16:00 - 20:00</button>
+              <button type="button" class="time-slot-btn" data-time="20:00 - 24:00">20:00 - 24:00</button>
+              <button type="button" class="time-slot-btn" data-time="Todo el día">Todo el día</button>
+            </div>
+          </div>
+
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>Hora de entrada</label>
-            <input type="time" value="10:00" />
-          </div>
-          <div class="form-group">
-            <label>Hora de salida</label>
-            <input type="time" value="14:00" />
-          </div>
+        <div class="modal-step-footer">
+          <div></div>
+          <button type="button" class="btn-step-next" id="btnGoToStep2">
+            <span>Continuar</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
         </div>
-
-        <div class="form-group">
-          <label>Duración estimada</label>
-          <div class="duration-box">4 horas</div>
-        </div>
-
-        <div class="reserve-summary">
-          <div class="summary-row">
-            <span>Precio por hora</span>
-            <span>$2.500</span>
-          </div>
-          <div class="summary-row total">
-            <span>Total estimado</span>
-            <strong>$10.000</strong>
-          </div>
-        </div>
-
-        <a href="confirmacion.html" class="btn-primary" style="display:flex;align-items:center;justify-content:center;text-decoration:none;gap:8px;">
-          Continuar <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
-        </a>
       </div>
+
+      <!-- PASO 2: SELECCIÓN DE ESPACIO / COCHERA -->
+      <div class="modal-step-panel" id="modalStep2">
+        <div class="step-two-columns">
+          
+          <div class="step-col-cocheras">
+            <h4 class="step-col-title">Seleccioná tu cochera</h4>
+            <div class="cocheras-grid-container">
+              <div class="cocheras-matrix" id="cocherasMatrix">
+                <button type="button" class="cochera-slot available" data-spot="A01">A01</button>
+                <button type="button" class="cochera-slot available" data-spot="A02">A02</button>
+                <button type="button" class="cochera-slot selected" data-spot="A03">
+                  <span>A03</span>
+                  <span class="spot-plus-badge">+</span>
+                </button>
+                <button type="button" class="cochera-slot occupied" data-spot="A04" disabled>A04</button>
+                
+                <button type="button" class="cochera-slot available" data-spot="B01">B01</button>
+                <button type="button" class="cochera-slot available" data-spot="B02">B02</button>
+                <button type="button" class="cochera-slot available" data-spot="B03">B03</button>
+                <button type="button" class="cochera-slot occupied" data-spot="B04" disabled>B04</button>
+              </div>
+
+              <div class="cocheras-legend-bar">
+                <span class="legend-item"><span class="legend-dot green"></span> Disponible</span>
+                <span class="legend-item"><span class="legend-dot yellow"></span> Seleccionada</span>
+                <span class="legend-item"><span class="legend-dot gray"></span> Ocupada</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-col-summary">
+            <div class="selected-spot-card-info">
+              <img src="https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=400&q=80" alt="Garage Plaza Italia" class="step-spot-thumb" />
+              <div class="step-spot-texts">
+                <h5 class="step-spot-garage-name">Garage Plaza Italia</h5>
+                <div class="spot-pill-location">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  <span id="reservaSelectedSpotLabel">A03</span>
+                  <span class="divider-dot">•</span>
+                  <span>Nivel -1</span>
+                </div>
+                <a href="#" class="link-full-plan" onclick="alert('Plano Nivel -1: Cocheras A01 a B12 disponibles.'); return false;">Ver plano completo →</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-step-footer">
+          <button type="button" class="btn-step-prev" id="btnBackToStep1">← Volver</button>
+          <button type="button" class="btn-step-next" id="btnGoToStep3">
+            <span>Continuar</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- PASO 3: DATOS DEL VEHÍCULO -->
+      <div class="modal-step-panel" id="modalStep3">
+        <div class="step-single-column">
+          <h4 class="step-col-title">Datos de tu vehículo</h4>
+          
+          <div class="vehicle-form-wrap">
+            <div class="vehicle-input-group">
+              <label for="reservaPlateInput">Patente / Matrícula *</label>
+              <div class="license-plate-input-container">
+                <input type="text" id="reservaPlateInput" placeholder="AE 123 CD" maxlength="9" autocomplete="off" />
+              </div>
+            </div>
+
+            <div class="vehicle-input-group">
+              <label for="reservaVehicleType">Tipo de vehículo *</label>
+              <select id="reservaVehicleType" class="select-vehicle-field">
+                <option value="Auto" selected>Auto</option>
+                <option value="Camioneta / SUV">Camioneta / SUV</option>
+                <option value="Moto">Moto</option>
+              </select>
+            </div>
+
+            <label class="checkbox-save-data">
+              <input type="checkbox" checked />
+              <span>Guardar mis datos para próximas reservas</span>
+            </label>
+
+            <div class="step3-price-summary-box">
+              <div class="summary-line">
+                <span id="reservaSpotSummaryText">Cochera A03 (Nivel -1) · 4 horas</span>
+                <strong>$10.000</strong>
+              </div>
+              <div class="summary-line discount">
+                <span>Descuento Mercado Pago (-20%)</span>
+                <strong>-$2.000</strong>
+              </div>
+              <div class="summary-line total">
+                <span>Total a pagar</span>
+                <strong>$8.000</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-step-footer">
+          <button type="button" class="btn-step-prev" id="btnBackToStep2">← Volver</button>
+          <button type="button" class="btn-step-next" id="btnConfirmReservation">
+            <span>Continuar</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- PASO 4: CONFIRMACIÓN Y TICKET QR DE ALTA DEFINICIÓN -->
+      <div class="modal-step-panel step-confirmation-view" id="modalStep4">
+        <div class="confirmation-success-wrap">
+          
+          <div class="success-top-badge">
+            <div class="green-circle-check">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <h2 class="success-main-title">¡Tu reserva fue confirmada!</h2>
+            <p class="success-sub-text">Te enviamos un comprobante a tu correo y podés encontrarla en 'Mis reservas'.</p>
+          </div>
+
+          <div class="digital-boarding-pass-card">
+            <div class="ticket-left-info">
+              <div class="ticket-booking-label">Código de reserva</div>
+              <div class="ticket-booking-code" id="reservaTicketCode">#PK-8492</div>
+
+              <div class="ticket-meta-items">
+                <div class="ticket-meta-row">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  <span id="reservaTicketSpot">Garage Plaza Italia · A03 - Nivel -1</span>
+                </div>
+                <div class="ticket-meta-row">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <span id="reservaTicketDateTime">Sáb. 8 nov. · 14:00 - 18:00</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ticket-right-qr">
+              <div class="qr-canvas-holder" id="reservaQrHolder">
+                <!-- QR generado vía JS -->
+              </div>
+            </div>
+          </div>
+
+          <div class="ticket-actions-row">
+            <a href="buscador.html" class="btn-ticket-map" style="text-decoration:none;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 19 21 12 17 5 21 12 2"></polygon></svg>
+              <span>Ver en el mapa</span>
+            </a>
+            <button type="button" class="btn-ticket-download" onclick="window.print()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>Descargar ticket</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
     </div>
+  </main>
 
-  </div>
+  <script>
+    // Generador SVG QR Vectorial de Alta Definición
+    function generateHighDefSVGQR(payloadText) {
+      const size = 29;
+      const matrix = Array.from({ length: size }, () => Array(size).fill(0));
 
-  <!-- Bottom Nav Mobile -->
-  <nav class="bottom-nav">
-    <div class="bottom-nav-inner">
-      <a href="../index.html"><i data-lucide="house" class="nav-icon"></i> Inicio</a>
-      <a href="detalle.html" class="active"><i data-lucide="search" class="nav-icon"></i> Reservas</a>
-      <a href="historial.html"><i data-lucide="clipboard-list" class="nav-icon"></i> Historial</a>
-      <a href="perfil.html"><i data-lucide="user" class="nav-icon"></i> Perfil</a>
-    </div>
-  </nav>
-</div>
+      function drawFinder(row, col) {
+        for (let r = 0; r < 7; r++) {
+          for (let c = 0; c < 7; c++) {
+            if (r === 0 || r === 6 || c === 0 || c === 6 || (r >= 2 && r <= 4 && c >= 2 && c <= 4)) {
+              matrix[row + r][col + c] = 1;
+            }
+          }
+        }
+      }
+      drawFinder(0, 0);
+      drawFinder(0, size - 7);
+      drawFinder(size - 7, 0);
 
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<script>lucide.createIcons();</script>
+      const alignRow = 20, alignCol = 20;
+      for (let r = -2; r <= 2; r++) {
+        for (let c = -2; c <= 2; c++) {
+          if (Math.abs(r) === 2 || Math.abs(c) === 2 || (r === 0 && c === 0)) {
+            matrix[alignRow + r][alignCol + c] = 1;
+          }
+        }
+      }
+
+      for (let i = 8; i < size - 8; i++) {
+        matrix[6][i] = i % 2 === 0 ? 1 : 0;
+        matrix[i][6] = i % 2 === 0 ? 1 : 0;
+      }
+
+      let hash = 0;
+      for (let i = 0; i < payloadText.length; i++) {
+        hash = (hash << 5) - hash + payloadText.charCodeAt(i);
+        hash |= 0;
+      }
+
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          if ((r < 8 && c < 8) || (r < 8 && c >= size - 8) || (r >= size - 8 && c < 8)) continue;
+          if (r >= alignRow - 2 && r <= alignRow + 2 && c >= alignCol - 2 && c <= alignCol + 2) continue;
+          if (r === 6 || c === 6) continue;
+          const val = ((r * 31 + c * 17 + Math.abs(hash)) % 100);
+          matrix[r][c] = val < 46 ? 1 : 0;
+        }
+      }
+
+      const cellSize = 4;
+      const padding = 8;
+      const totalDim = size * cellSize + padding * 2;
+      let rects = '';
+
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          if (matrix[r][c] === 1) {
+            const x = padding + c * cellSize;
+            const y = padding + r * cellSize;
+            rects += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" fill="#0F172A" shape-rendering="crispEdges"/>`;
+          }
+        }
+      }
+
+      return `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalDim} ${totalDim}" width="100%" height="100%" style="display:block;">
+          <rect width="${totalDim}" height="${totalDim}" fill="#FFFFFF" rx="6"/>
+          ${rects}
+        </svg>
+      `;
+    }
+
+    // Control de Pasos
+    const state = {
+      step: 1,
+      day: 8,
+      dateShort: "Sáb. 8 nov.",
+      time: "14:00 - 18:00",
+      spot: "A03",
+      level: "Nivel -1",
+      plate: "AE 123 CD",
+      garage: "Garage Plaza Italia"
+    };
+
+    function goTo(step) {
+      state.step = step;
+      for (let i = 1; i <= 4; i++) {
+        const ind = document.getElementById('stepIndicator' + i);
+        const panel = document.getElementById('modalStep' + i);
+        const line = document.getElementById('stepLine' + (i - 1));
+
+        if (ind) {
+          ind.classList.remove('active', 'completed');
+          const circle = ind.querySelector('.step-circle');
+          if (i < step) {
+            ind.classList.add('completed');
+            if (circle) circle.textContent = '✓';
+          } else if (i === step) {
+            ind.classList.add('active');
+            if (circle) circle.textContent = i;
+          } else {
+            if (circle) circle.textContent = i;
+          }
+        }
+
+        if (line) {
+          if (i - 1 < step) line.classList.add('filled');
+          else line.classList.remove('filled');
+        }
+
+        if (panel) {
+          if (i === step) panel.classList.add('active');
+          else panel.classList.remove('active');
+        }
+      }
+
+      if (step === 4) {
+        document.getElementById('reservaTicketCode').textContent = "#PK-8492";
+        document.getElementById('reservaTicketSpot').textContent = state.garage + " · " + state.spot + " - " + state.level;
+        document.getElementById('reservaTicketDateTime').textContent = state.dateShort + " · " + state.time;
+        const qrBox = document.getElementById('reservaQrHolder');
+        if (qrBox) {
+          qrBox.innerHTML = generateHighDefSVGQR("PARKIA|" + state.garage + "|" + state.spot + "|" + state.dateShort + "|" + state.time);
+        }
+      }
+    }
+
+    // Inicializar Calendario
+    const calGrid = document.getElementById('calendarDaysGrid');
+    if (calGrid) {
+      let calHtml = '';
+      for (let e = 0; e < 6; e++) calHtml += `<div class="cal-day-cell disabled"></div>`;
+      for (let d = 1; d <= 30; d++) {
+        calHtml += `<div class="cal-day-cell ${d === 8 ? 'selected' : ''}" data-day="${d}">${d}</div>`;
+      }
+      calGrid.innerHTML = calHtml;
+
+      calGrid.querySelectorAll('.cal-day-cell:not(.disabled)').forEach(c => {
+        c.addEventListener('click', function() {
+          calGrid.querySelectorAll('.cal-day-cell').forEach(x => x.classList.remove('selected'));
+          this.classList.add('selected');
+          state.day = parseInt(this.getAttribute('data-day'), 10);
+          state.dateShort = "Sáb. " + state.day + " nov.";
+        });
+      });
+    }
+
+    // Horarios
+    document.querySelectorAll('.time-slot-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        state.time = this.getAttribute('data-time');
+      });
+    });
+
+    // Cocheras
+    document.querySelectorAll('.cochera-slot:not(.occupied)').forEach(slot => {
+      slot.addEventListener('click', function() {
+        document.querySelectorAll('.cochera-slot').forEach(s => {
+          s.classList.remove('selected');
+          const p = s.querySelector('.spot-plus-badge');
+          if (p) p.remove();
+        });
+        this.classList.add('selected');
+        state.spot = this.getAttribute('data-spot');
+        const badge = document.createElement('span');
+        badge.className = 'spot-plus-badge';
+        badge.textContent = '+';
+        this.appendChild(badge);
+        const lbl = document.getElementById('reservaSelectedSpotLabel');
+        if (lbl) lbl.textContent = state.spot;
+        const sumText = document.getElementById('reservaSpotSummaryText');
+        if (sumText) sumText.textContent = `Cochera ${state.spot} (${state.level}) · 4 horas`;
+      });
+    });
+
+    // Navegación
+    document.getElementById('btnGoToStep2').addEventListener('click', () => goTo(2));
+    document.getElementById('btnBackToStep1').addEventListener('click', () => goTo(1));
+    document.getElementById('btnGoToStep3').addEventListener('click', () => goTo(3));
+    document.getElementById('btnBackToStep2').addEventListener('click', () => goTo(2));
+    document.getElementById('btnConfirmReservation').addEventListener('click', () => {
+      const pInput = document.getElementById('reservaPlateInput');
+      if (pInput && pInput.value.trim()) state.plate = pInput.value.trim().toUpperCase();
+      goTo(4);
+    });
+
+    const pInput = document.getElementById('reservaPlateInput');
+    if (pInput) {
+      pInput.addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+      });
+    }
+  </script>
 </body>
 </html>

@@ -1,5 +1,4 @@
 /* ==========================================================================
-   PARKIA — ESTILOS COMPLETOS FIDELIDAD 100% (MODERN MOBILITY)
    Diseño idéntico a la interfaz de búsqueda, mapa interactivo y recomendaciones
    ========================================================================== */
 
@@ -748,7 +747,7 @@ body {
 }
 
 /* ==========================================================================
-   4. SIDEBAR DETALLE COCHERA (COLUMNA DERECHA PERMANENTE)
+   4. SIDEBAR DETALLE COCHERA 
    ========================================================================== */
 .parking-detail-sidebar {
   background: var(--white);
@@ -1550,7 +1549,7 @@ body {
 }
 
 /* ==========================================================================
-   7. MODAL DE RESERVA RÁPIDA (INTERACTIVO)
+   7. MODAL DE RESERVA RÁPIDA 
    ========================================================================== */
 .reservation-modal-overlay {
   position: fixed;
@@ -1571,13 +1570,14 @@ body {
   display: flex;
 }
 
-.reservation-modal-box {
+.reservation-modal-box.compact-single-window {
   background: var(--white);
   border-radius: 20px;
   width: 100%;
-  max-width: 520px;
-  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35);
+  max-width: 530px;
+  box-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.5);
   overflow: hidden;
+  max-height: 92vh;
   display: flex;
   flex-direction: column;
   animation: modal-enter 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1588,34 +1588,50 @@ body {
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
+.modal-inner-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .modal-header-bar {
-  padding: 18px 24px;
+  padding: 16px 22px 14px;
   border-bottom: 1px solid var(--slate-200);
+  background: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.modal-header-bar h3 {
+.modal-header-title-wrap h3 {
   font-size: 1.15rem;
   font-weight: 800;
   color: var(--slate-900);
+  margin: 0;
+}
+
+.modal-header-subtitle {
+  font-size: 11px;
+  color: var(--slate-500);
+  font-weight: 500;
+  display: block;
+  margin-top: 1px;
 }
 
 .btn-close-modal {
   background: var(--slate-100);
   border: none;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   color: var(--slate-600);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
-  transition: background 0.15s ease;
+  transition: all 0.15s ease;
 }
 
 .btn-close-modal:hover {
@@ -1623,196 +1639,482 @@ body {
   color: var(--slate-900);
 }
 
-.modal-body-content {
-  padding: 20px 24px;
+.compact-scroll-body {
+  padding: 16px 22px 20px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  max-height: 75vh;
-  overflow-y: auto;
+  gap: 12px;
+  max-height: calc(92vh - 65px);
 }
 
-.modal-garage-summary {
+/* Card resumen del garaje */
+.modal-garage-compact-card {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   background: var(--slate-50);
-  padding: 12px;
-  border-radius: 12px;
   border: 1px solid var(--slate-200);
+  border-radius: 12px;
+  padding: 10px 12px;
 }
 
-.modal-garage-img {
-  width: 64px;
-  height: 64px;
-  border-radius: 10px;
+.modal-garage-mini-thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
   object-fit: cover;
 }
 
-.modal-garage-title {
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: var(--slate-900);
-}
-
-.modal-garage-loc {
-  font-size: 0.75rem;
-  color: var(--slate-500);
-  margin-top: 2px;
-}
-
-.modal-form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.modal-form-field {
+.modal-garage-compact-info {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 
-.modal-form-field label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--slate-700);
-}
-
-.modal-form-field select,
-.modal-form-field input {
-  padding: 9px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--slate-300);
-  font-family: inherit;
-  font-size: 0.8125rem;
-  color: var(--slate-900);
-  outline: none;
-}
-
-.modal-price-breakdown {
-  background: #F8FAFC;
-  border: 1px solid var(--slate-200);
-  border-radius: 12px;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.breakdown-row {
+.garage-title-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.8125rem;
-  color: var(--slate-600);
-}
-
-.breakdown-row.discount-row {
-  color: var(--emerald-dark);
-  font-weight: 700;
-}
-
-.breakdown-row.total-row {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--slate-900);
-  border-top: 1px dashed var(--slate-300);
-  padding-top: 8px;
-  margin-top: 2px;
-}
-
-.modal-payment-select {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.modal-payment-select label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--slate-700);
-}
-
-.payment-options-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   gap: 8px;
 }
 
-.pay-radio-card {
-  border: 1.5px solid var(--slate-200);
-  border-radius: 10px;
-  padding: 8px;
+.modal-garage-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--slate-900);
+}
+
+.badge-tag-mini {
+  font-size: 10px;
+  font-weight: 700;
+  background: #E2E8F0;
+  color: #475569;
+  padding: 2px 7px;
+  border-radius: 5px;
+}
+
+.modal-garage-loc {
+  font-size: 11px;
+  color: var(--slate-500);
+  margin-top: 1px;
+}
+
+.modal-price-pill {
+  font-size: 12px;
+  font-weight: 800;
+  color: #2563EB;
+  margin-top: 2px;
+}
+
+/* Secciones dentro de la mini ventana */
+.modal-section-card {
+  background: #FFFFFF;
+  border: 1px solid var(--slate-200);
+  border-radius: 12px;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
+  gap: 8px;
+}
+
+.section-card-heading {
+  display: flex;
   align-items: center;
-  gap: 4px;
-  cursor: pointer;
-  text-align: center;
-  font-size: 0.75rem;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--slate-900);
+}
+
+.section-card-heading-space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.current-selected-spot-badge {
+  font-size: 11px;
   font-weight: 700;
+  color: #065F46;
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  padding: 3px 9px;
+  border-radius: 16px;
+}
+
+.form-row-dates {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  gap: 8px;
+}
+
+.form-row-vehicle {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 10px;
+}
+
+.form-field-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-field-item label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--slate-600);
+}
+
+.form-field-item input,
+.form-field-item select {
+  padding: 9px 10px;
+  border-radius: 8px;
+  border: 1.5px solid var(--slate-300);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--slate-900);
+  outline: none;
+  font-family: inherit;
+  background: #FFFFFF;
+  transition: border-color 0.15s ease;
+}
+
+.form-field-item input:focus,
+.form-field-item select:focus {
+  border-color: #0F172A;
+}
+
+.input-plate-style {
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 800 !important;
+}
+
+.duration-badge-bar {
+  background: #F1F5F9;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 11px;
   color: var(--slate-700);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Grilla de cocheras en mini ventana */
+.cocheras-compact-matrix {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.compact-spot-btn {
+  height: 38px;
+  border-radius: 8px;
+  border: 1.5px solid var(--slate-200);
+  background: #FFFFFF;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--slate-800);
+  cursor: pointer;
   transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-family: inherit;
 }
 
-.pay-radio-card.selected {
-  border-color: #2563EB;
-  background: #EFF6FF;
-  color: #1E3A8A;
+.compact-spot-btn.available:hover {
+  border-color: #F59E0B;
+  background: #FFFBEB;
 }
 
-.btn-confirm-checkout {
-  background-color: var(--navy-surface);
-  color: var(--white);
+.compact-spot-btn.selected {
+  background: #F59E0B !important;
+  color: #0F172A !important;
+  border-color: #D97706 !important;
+  font-weight: 900;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+}
+
+.spot-indicator-star {
+  font-size: 10px;
+  color: #0F172A;
+}
+
+.compact-spot-btn.occupied {
+  background: #E2E8F0;
+  color: #94A3B8;
+  text-decoration: line-through;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.cocheras-legend-compact {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  font-size: 11px;
+  color: var(--slate-500);
+  font-weight: 600;
+}
+
+.legend-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-dot.green { background: #10B981; }
+.legend-dot.yellow { background: #F59E0B; }
+.legend-dot.gray { background: #94A3B8; }
+
+/* Desglose de precios compacto */
+.modal-price-breakdown-compact {
+  background: #F8FAFC;
+  border: 1px solid var(--slate-200);
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.breakdown-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--slate-600);
+}
+
+.breakdown-line.discount {
+  color: #059669;
+  font-weight: 700;
+}
+
+.breakdown-line.total {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--slate-900);
+  border-top: 1px dashed var(--slate-300);
+  padding-top: 6px;
+  margin-top: 2px;
+}
+
+.btn-confirm-checkout-full {
+  background: #0F172A;
+  color: #FFFFFF;
   border: none;
   border-radius: 12px;
-  padding: 13px;
-  font-family: inherit;
-  font-size: 0.9375rem;
+  padding: 12px 18px;
+  font-size: 14px;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   transition: all 0.15s ease;
-  margin-top: 4px;
+  width: 100%;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+  font-family: inherit;
 }
 
-.btn-confirm-checkout:hover {
-  background-color: var(--navy-card);
+.btn-confirm-checkout-full:hover {
+  background: #1E293B;
   transform: translateY(-1px);
 }
 
-/* Estado de Confirmación Exitosa */
-.success-ticket-box {
-  display: none;
+/* ==========================================================================
+   TICKET DIGITAL Y CÓDIGO QR EN LA MISMA MINI VENTANA
+   ========================================================================== */
+.step-confirmation-view {
+  background: linear-gradient(150deg, #0B192C 0%, #152843 60%, #0F172A 100%);
+  color: #FFFFFF;
+  padding: 26px 22px;
+  border-radius: 20px;
+}
+
+.confirmation-success-wrap {
+  display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 20px 0;
-  gap: 12px;
 }
 
-.success-check-icon {
+.green-circle-check {
   width: 54px;
   height: 54px;
-  background: var(--emerald-light);
-  color: var(--emerald-green);
   border-radius: 50%;
+  background: #10B981;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+}
+
+.success-main-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+
+.success-sub-text {
+  font-size: 12px;
+  color: #94A3B8;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.digital-boarding-pass-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 460px;
+  padding: 18px 20px;
+  margin: 18px 0;
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 14px;
+  align-items: center;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  text-align: left;
+}
+
+.ticket-booking-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #64748B;
+}
+
+.ticket-booking-code {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #0F172A;
+  letter-spacing: -0.03em;
+  margin: 2px 0 10px;
+}
+
+.ticket-meta-items {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ticket-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.ticket-right-qr {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.qr-code-placeholder {
-  width: 140px;
-  height: 140px;
+.qr-canvas-holder {
+  width: 115px;
+  height: 115px;
   background: #FFFFFF;
-  border: 2px dashed var(--slate-300);
-  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 8px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.qr-canvas-holder svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.qr-scan-hint {
+  font-size: 10px;
+  color: #94A3B8;
+  margin-top: 4px;
+}
+
+.ticket-actions-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 460px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-ticket-map {
+  background: #F59E0B;
+  color: #0F172A;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.btn-ticket-map:hover {
+  background: #D97706;
+  transform: translateY(-1px);
+}
+
+.btn-ticket-download {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.btn-ticket-download:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-ticket-close {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.btn-ticket-close:hover {
+  background: rgba(255, 255, 255, 0.16);
 }
 
 /* ==========================================================================

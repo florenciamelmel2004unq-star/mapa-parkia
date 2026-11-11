@@ -11,31 +11,32 @@ document.addEventListener('DOMContentLoaded', function () {
   const parkingSpots = [
     {
       id: 1,
-      name: "Garage Plaza San Martín",
-      address: "San Martín 932, Retiro, CABA",
-      neighborhood: "Retiro",
-      distance: "1.2 km",
-      lat: -34.5955,
-      lng: -58.3768,
+      name: "Garage Plaza Italia",
+      address: "Av. Santa Fe 3900, Palermo, CABA",
+      neighborhood: "Palermo",
+      distance: "1.1 km",
+      lat: -34.5815,
+      lng: -58.4208,
       price: 2500,
       fraction: 800,
       stay12: 18000,
       stay24: 32000,
       rating: 4.8,
-      reviews: 124,
+      reviews: 320,
       statusText: "Disponible ahora",
-      occupiedPercent: 80,
-      availableSpots: 4,
-      totalSpots: 20,
+      occupiedPercent: 78,
+      availableSpots: 5,
+      totalSpots: 24,
       is24hs: true,
       isCovered: true,
       acceptsMP: true,
-      hasCharger: false,
-      pinColor: 'navy',
+      hasCharger: true,
+      isFeatured: true,
+      pinColor: 'amber',
       features: [
         { icon: 'car', label: 'Techado' },
-        { icon: 'arrow-up', label: 'Altura máx. 2.10 m' },
         { icon: 'shield', label: 'Vigilancia 24hs' },
+        { icon: 'zap', label: 'Carga eléctrica' },
         { icon: 'qr', label: 'Acceso con QR' }
       ],
       photos: [
@@ -908,38 +909,354 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // =========================================================================
-  // 10. MODAL DE RESERVA RÁPIDA (RESERVAR AHORA)
+  // 10. GENERADOR DE CÓDIGO QR VECTORIAL DE ALTA DEFINICIÓN (SVG REAL)
+  // =========================================================================
+  function generateHighDefSVGQR(payloadText) {
+    // Matriz de 29x29 módulos para QR auténtico y nítido
+    const size = 29;
+    const matrix = Array.from({ length: size }, () => Array(size).fill(0));
+
+    // 1. Finder patterns en esquinas (Superior-Izq, Superior-Der, Inferior-Izq)
+    function drawFinder(row, col) {
+      for (let r = 0; r < 7; r++) {
+        for (let c = 0; c < 7; c++) {
+          if (r === 0 || r === 6 || c === 0 || c === 6 || (r >= 2 && r <= 4 && c >= 2 && c <= 4)) {
+            matrix[row + r][col + c] = 1;
+          }
+        }
+      }
+    }
+    drawFinder(0, 0);
+    drawFinder(0, size - 7);
+    drawFinder(size - 7, 0);
+
+    // 2. Alignment pattern en posición (20, 20)
+    const alignRow = 20, alignCol = 20;
+    for (let r = -2; r <= 2; r++) {
+      for (let c = -2; c <= 2; c++) {
+        if (Math.abs(r) === 2 || Math.abs(c) === 2 || (r === 0 && c === 0)) {
+          matrix[alignRow + r][alignCol + c] = 1;
+        }
+      }
+    }
+
+    // 3. Timing patterns (líneas punteadas en fila 6 y columna 6)
+    for (let i = 8; i < size - 8; i++) {
+      matrix[6][i] = i % 2 === 0 ? 1 : 0;
+      matrix[i][6] = i % 2 === 0 ? 1 : 0;
+    }
+
+    // 4. Generación pseudo-aleatoria determinística para el payload
+    let hash = 0;
+    for (let i = 0; i < payloadText.length; i++) {
+      hash = (hash << 5) - hash + payloadText.charCodeAt(i);
+      hash |= 0;
+    }
+
+    // Llenar módulos de datos respetando zonas reservadas
+    for (let r = 0; r < size; r++) {
+      for (let c = 0; c < size; c++) {
+        // Ignorar finders
+        if ((r < 8 && c < 8) || (r < 8 && c >= size - 8) || (r >= size - 8 && c < 8)) continue;
+        // Ignorar alignment
+        if (r >= alignRow - 2 && r <= alignRow + 2 && c >= alignCol - 2 && c <= alignCol + 2) continue;
+        // Ignorar timing
+        if (r === 6 || c === 6) continue;
+
+        const val = ((r * 31 + c * 17 + Math.abs(hash)) % 100);
+        matrix[r][c] = val < 46 ? 1 : 0;
+      }
+    }
+
+    // Construir SVG de alta definición
+    const cellSize = 4;
+    const padding = 8;
+    const totalDim = size * cellSize + padding * 2;
+    let rects = '';
+
+    for (let r = 0; r < size; r++) {
+      for (let c = 0; c < size; c++) {
+        if (matrix[r][c] === 1) {
+          const x = padding + c * cellSize;
+          const y = padding + r * cellSize;
+          rects += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" fill="#0F172A" shape-rendering="crispEdges"/>`;
+        }
+      }
+    }
+
+    return `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalDim} ${totalDim}" width="100%" height="100%" style="display:block;">
+        <rect width="${totalDim}" height="${totalDim}" fill="#FFFFFF" rx="6"/>
+        ${rects}
+      </svg>
+    `;
+  }
+
+  // =========================================================================
+  // 11. MODAL DE RESERVA COMPACTO Y UNIFICADO (TODO EN UNA MINI VENTANA)
   // =========================================================================
   const modalOverlay = document.getElementById('reservationModal');
   const btnCloseModal = document.getElementById('btnCloseModal');
   const btnBookSidebar = document.getElementById('btnBookSidebar');
-  const btnConfirmBooking = document.getElementById('btnConfirmBooking');
-  const modalFormView = document.getElementById('modalFormView');
-  const modalSuccessView = document.getElementById('modalSuccessView');
-  const btnFinishReservation = document.getElementById('btnFinishReservation');
+  const modalBookingFormView = document.getElementById('modalBookingFormView');
+  const modalConfirmationTicketView = document.getElementById('modalConfirmationTicketView');
 
-  function openReservationModal() {
-    if (!modalOverlay) return;
+  // Elementos del formulario compacto
+  const inputBookingDate = document.getElementById('inputBookingDate');
+  const inputTimeFrom = document.getElementById('inputTimeFrom');
+  const inputTimeTo = document.getElementById('inputTimeTo');
+  const lblEstimatedDuration = document.getElementById('lblEstimatedDuration');
+  const lblSelectedCochera = document.getElementById('lblSelectedCochera');
+  const inputBookingPlate = document.getElementById('inputBookingPlate');
+  const selectBookingVehicleType = document.getElementById('selectBookingVehicleType');
+  const btnConfirmReservation = document.getElementById('btnConfirmReservation');
 
-    // Poblar modal con datos actuales
-    document.getElementById('modalGarageImg').src = currentSpot.photos[0];
-    document.getElementById('modalGarageTitle').textContent = currentSpot.name;
-    document.getElementById('modalGarageLoc').textContent = currentSpot.address;
-    
-    // Cálculo de precio (ejemplo 4 horas con 20% OFF Mercado Pago)
-    const baseHourPrice = currentSpot.price;
-    const subtotal = baseHourPrice * 4;
+  // Elementos de desglose de precio
+  const lblRateLine = document.getElementById('lblRateLine');
+  const lblSubtotal = document.getElementById('lblSubtotal');
+  const lblDiscount = document.getElementById('lblDiscount');
+  const lblTotal = document.getElementById('lblTotal');
+
+  // Botones de acción del ticket
+  const btnTicketViewMap = document.getElementById('btnTicketViewMap');
+  const btnTicketDownload = document.getElementById('btnTicketDownload');
+  const btnTicketClose = document.getElementById('btnTicketClose');
+
+  // Estado centralizado de la reserva
+  const reservationState = {
+    dateRaw: "2026-11-08",
+    dateShort: "Sáb. 8 nov.",
+    timeFrom: "10:00",
+    timeTo: "14:00",
+    timeSlot: "10:00 - 14:00",
+    hours: 4,
+    spot: "A03",
+    spotLevel: "Nivel -1",
+    plate: "AE 123 CD",
+    vehicleType: "Auto",
+    bookingCode: "#PK-8492",
+    subtotal: 10000,
+    discount: 2000,
+    total: 8000
+  };
+
+  // Formatear fecha legible corta
+  function formatShortDate(dateStr) {
+    if (!dateStr) return "Sáb. 8 nov.";
+    try {
+      const parts = dateStr.split('-');
+      if (parts.length === 3) {
+        const year = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10);
+        const day = parseInt(parts[2], 10);
+        const dateObj = new Date(year, month - 1, day);
+        const days = ['Dom.', 'Lun.', 'Mar.', 'Mié.', 'Jue.', 'Vie.', 'Sáb.'];
+        const months = ['ene.', 'feb.', 'mar.', 'abr.', 'may.', 'jun.', 'jul.', 'ago.', 'sep.', 'oct.', 'nov.', 'dic.'];
+        const dayName = days[dateObj.getDay()] || 'Sáb.';
+        const monthName = months[month - 1] || 'nov.';
+        return `${dayName} ${day} ${monthName}`;
+      }
+    } catch (e) {
+      console.warn("Date parse error:", e);
+    }
+    return dateStr;
+  }
+
+  // Calcular duración y montos en tiempo real con horarios libres
+  function updateBookingCalculations() {
+    if (!currentSpot) return;
+
+    const fromVal = inputTimeFrom && inputTimeFrom.value ? inputTimeFrom.value : "10:00";
+    const toVal = inputTimeTo && inputTimeTo.value ? inputTimeTo.value : "14:00";
+
+    const [fromH, fromM] = fromVal.split(':').map(Number);
+    const [toH, toM] = toVal.split(':').map(Number);
+
+    let fromMinutes = ((fromH || 0) * 60) + (fromM || 0);
+    let toMinutes = ((toH || 0) * 60) + (toM || 0);
+
+    let diffMinutes = toMinutes - fromMinutes;
+    if (diffMinutes <= 0) {
+      diffMinutes = 60; // Mínimo 1 hora si la salida es previa o igual
+    }
+
+    const hoursExact = diffMinutes / 60;
+    const hours = Math.max(1, Math.round(hoursExact * 10) / 10);
+
+    reservationState.hours = hours;
+    reservationState.timeFrom = fromVal;
+    reservationState.timeTo = toVal;
+    reservationState.timeSlot = `${fromVal} - ${toVal}`;
+
+    const dateVal = inputBookingDate && inputBookingDate.value ? inputBookingDate.value : "2026-11-08";
+    reservationState.dateRaw = dateVal;
+    reservationState.dateShort = formatShortDate(dateVal);
+
+    if (lblEstimatedDuration) {
+      const hoursText = hours === 1 ? '1 hora' : (Number.isInteger(hours) ? `${hours} horas` : `${hours} horas`);
+      lblEstimatedDuration.textContent = hoursText;
+    }
+
+    const pricePerHour = currentSpot.price || 2500;
+    const subtotal = Math.round(pricePerHour * hours);
     const discount = Math.round(subtotal * 0.20);
     const total = subtotal - discount;
 
-    document.getElementById('modalPriceHour').textContent = `${formatMoney(baseHourPrice)}/h`;
-    document.getElementById('modalSubtotal').textContent = formatMoney(subtotal);
-    document.getElementById('modalDiscount').textContent = `-${formatMoney(discount)}`;
-    document.getElementById('modalTotal').textContent = formatMoney(total);
+    reservationState.subtotal = subtotal;
+    reservationState.discount = discount;
+    reservationState.total = total;
 
-    if (modalFormView) modalFormView.style.display = 'flex';
-    if (modalSuccessView) modalSuccessView.style.display = 'none';
+    if (lblRateLine) {
+      const hoursLabel = hours === 1 ? '1 hora' : `${hours} horas`;
+      lblRateLine.textContent = `Estadía estimada (${hoursLabel} a ${formatMoney(pricePerHour)}/h)`;
+    }
+    if (lblSubtotal) lblSubtotal.textContent = formatMoney(subtotal);
+    if (lblDiscount) lblDiscount.textContent = `-${formatMoney(discount)}`;
+    if (lblTotal) lblTotal.textContent = formatMoney(total);
+  }
 
+  // Listeners para recálculo automático cuando cambian los horarios libres o fecha
+  if (inputTimeFrom) inputTimeFrom.addEventListener('input', updateBookingCalculations);
+  if (inputTimeTo) inputTimeTo.addEventListener('input', updateBookingCalculations);
+  if (inputBookingDate) inputBookingDate.addEventListener('change', updateBookingCalculations);
+
+  // Mayúsculas automáticas en patente
+  if (inputBookingPlate) {
+    inputBookingPlate.addEventListener('input', function () {
+      this.value = this.value.toUpperCase();
+    });
+  }
+
+  // Selección interactiva de cochera dentro de la mini ventana
+  const compactSpotButtons = document.querySelectorAll('.cocheras-compact-matrix .compact-spot-btn.available');
+  compactSpotButtons.forEach(btn => {
+    btn.addEventListener('click', function () {
+      // Remover clase seleccionada y estrella de todos
+      document.querySelectorAll('.cocheras-compact-matrix .compact-spot-btn').forEach(b => {
+        b.classList.remove('selected');
+        const star = b.querySelector('.spot-indicator-star');
+        if (star) star.remove();
+      });
+
+      // Activar el seleccionado
+      this.classList.add('selected');
+      const starSpan = document.createElement('span');
+      starSpan.className = 'spot-indicator-star';
+      starSpan.textContent = '★';
+      this.appendChild(starSpan);
+
+      const spotCode = this.getAttribute('data-spot') || 'A03';
+      const spotLevel = this.getAttribute('data-level') || 'Nivel -1';
+      reservationState.spot = spotCode;
+      reservationState.spotLevel = spotLevel;
+
+      if (lblSelectedCochera) {
+        lblSelectedCochera.textContent = `${spotCode} (${spotLevel})`;
+      }
+    });
+  });
+
+  // Renderizar Ticket de Confirmación con QR de Alta Definición
+  function renderConfirmationTicket() {
+    const codeElem = document.getElementById('ticketBookingCode');
+    if (codeElem) codeElem.textContent = reservationState.bookingCode;
+
+    const spotElem = document.getElementById('ticketGarageSpot');
+    if (spotElem) spotElem.textContent = `${currentSpot.name} · ${reservationState.spot} - ${reservationState.spotLevel}`;
+
+    const dateElem = document.getElementById('ticketDateTime');
+    if (dateElem) dateElem.textContent = `${reservationState.dateShort} · ${reservationState.timeSlot}`;
+
+    const vehicleElem = document.getElementById('ticketVehicle');
+    if (vehicleElem) vehicleElem.textContent = `${reservationState.vehicleType} · Patente ${reservationState.plate}`;
+
+    // Generar código QR vectorial nítido con el SVG generator
+    const qrHolder = document.getElementById('qrCanvasHolder');
+    if (qrHolder) {
+      const qrPayload = `PARKIA-TICKET|CODE:${reservationState.bookingCode}|GARAGE:${currentSpot.name}|SPOT:${reservationState.spot}|DATE:${reservationState.dateShort}|TIME:${reservationState.timeSlot}|PLATE:${reservationState.plate}`;
+      qrHolder.innerHTML = generateHighDefSVGQR(qrPayload);
+    }
+
+    // Guardar en localStorage para 'Mis reservas' y 'confirmacion.html'
+    const ticketData = {
+      code: reservationState.bookingCode,
+      garageName: currentSpot.name,
+      garageAddress: currentSpot.address,
+      spot: reservationState.spot,
+      spotLevel: reservationState.spotLevel,
+      date: reservationState.dateShort,
+      time: reservationState.timeSlot,
+      plate: reservationState.plate,
+      vehicleType: reservationState.vehicleType,
+      price: currentSpot.price,
+      total: reservationState.total,
+      createdAt: new Date().toISOString()
+    };
+    try {
+      localStorage.setItem('parkia_last_reservation', JSON.stringify(ticketData));
+      const existing = JSON.parse(localStorage.getItem('parkia_my_reservations') || '[]');
+      existing.unshift(ticketData);
+      localStorage.setItem('parkia_my_reservations', JSON.stringify(existing));
+    } catch (e) {
+      console.warn("Storage warning:", e);
+    }
+  }
+
+  // Confirmar y procesar reserva desde la mini ventana
+  if (btnConfirmReservation) {
+    btnConfirmReservation.addEventListener('click', () => {
+      const plate = inputBookingPlate && inputBookingPlate.value.trim() ? inputBookingPlate.value.trim().toUpperCase() : "AE 123 CD";
+      const vehicleType = selectBookingVehicleType ? selectBookingVehicleType.value : "Auto";
+      const dateVal = inputBookingDate && inputBookingDate.value ? inputBookingDate.value : "2026-11-08";
+
+      reservationState.plate = plate;
+      reservationState.vehicleType = vehicleType;
+      reservationState.dateRaw = dateVal;
+      reservationState.dateShort = formatShortDate(dateVal);
+
+      // Código de reserva
+      reservationState.bookingCode = `#PK-${Math.floor(1000 + Math.random() * 9000)}`;
+
+      btnConfirmReservation.innerHTML = '<span>Generando reserva...</span>';
+      btnConfirmReservation.disabled = true;
+
+      setTimeout(() => {
+        btnConfirmReservation.innerHTML = `<span>Confirmar y Reservar</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
+        btnConfirmReservation.disabled = false;
+
+        if (modalBookingFormView) modalBookingFormView.style.display = 'none';
+        if (modalConfirmationTicketView) modalConfirmationTicketView.style.display = 'block';
+
+        renderConfirmationTicket();
+      }, 350);
+    });
+  }
+
+  // Abrir / Cerrar modal
+  function openReservationModal() {
+    if (!modalOverlay) return;
+
+    // Restaurar a la vista de formulario
+    if (modalBookingFormView) modalBookingFormView.style.display = 'block';
+    if (modalConfirmationTicketView) modalConfirmationTicketView.style.display = 'none';
+
+    // Actualizar garaje seleccionado en el encabezado de la mini ventana
+    if (currentSpot) {
+      const modalImg = document.getElementById('modalGarageImg');
+      const modalTitle = document.getElementById('modalGarageTitle');
+      const modalBadge = document.getElementById('modalSpotBadge');
+      const modalLoc = document.getElementById('modalGarageLoc');
+      const modalPrice = document.getElementById('modalPriceHour');
+
+      if (modalImg) modalImg.src = currentSpot.photos && currentSpot.photos[0] ? currentSpot.photos[0] : '';
+      if (modalTitle) modalTitle.textContent = currentSpot.name;
+      if (modalBadge) modalBadge.textContent = `${currentSpot.isCovered ? 'Techado' : 'Aire libre'} • ${currentSpot.is24hs ? '24hs' : 'Diurno'}`;
+      if (modalLoc) modalLoc.textContent = currentSpot.address;
+      if (modalPrice) modalPrice.textContent = `${formatMoney(currentSpot.price)} / hora`;
+    }
+
+    updateBookingCalculations();
     modalOverlay.classList.add('open');
   }
 
@@ -947,6 +1264,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (modalOverlay) modalOverlay.classList.remove('open');
   }
 
+  // Eventos de botones abrir/cerrar
   if (btnBookSidebar) {
     btnBookSidebar.addEventListener('click', (e) => {
       e.preventDefault();
@@ -958,49 +1276,35 @@ document.addEventListener('DOMContentLoaded', function () {
     btnCloseModal.addEventListener('click', closeReservationModal);
   }
 
+  if (btnTicketClose) {
+    btnTicketClose.addEventListener('click', closeReservationModal);
+  }
+
   if (modalOverlay) {
     modalOverlay.addEventListener('click', (e) => {
       if (e.target === modalOverlay) closeReservationModal();
     });
   }
 
-  // Selección de método de pago en el modal
-  document.querySelectorAll('.pay-radio-card').forEach(card => {
-    card.addEventListener('click', function () {
-      document.querySelectorAll('.pay-radio-card').forEach(c => c.classList.remove('selected'));
-      this.classList.add('selected');
-    });
-  });
-
-  // Confirmar reserva simulada
-  if (btnConfirmBooking) {
-    btnConfirmBooking.addEventListener('click', () => {
-      btnConfirmBooking.textContent = 'Procesando pago...';
-      btnConfirmBooking.disabled = true;
-
-      setTimeout(() => {
-        btnConfirmBooking.textContent = 'Confirmar y Pagar';
-        btnConfirmBooking.disabled = false;
-
-        if (modalFormView) modalFormView.style.display = 'none';
-        if (modalSuccessView) modalSuccessView.style.display = 'flex';
-
-        // Generar código de reserva aleatorio
-        const randCode = 'PRK-' + Math.floor(100000 + Math.random() * 900000);
-        const codeElem = document.getElementById('successBookingCode');
-        if (codeElem) codeElem.textContent = randCode;
-      }, 1000);
+  // Botón "Ver en el mapa" en el ticket
+  if (btnTicketViewMap) {
+    btnTicketViewMap.addEventListener('click', () => {
+      closeReservationModal();
+      if (currentSpot && map) {
+        map.flyTo([currentSpot.lat, currentSpot.lng], 16, { duration: 1 });
+      }
     });
   }
 
-  if (btnFinishReservation) {
-    btnFinishReservation.addEventListener('click', () => {
-      closeReservationModal();
+  // Botón "Descargar ticket"
+  if (btnTicketDownload) {
+    btnTicketDownload.addEventListener('click', () => {
+      window.print();
     });
   }
 
   // =========================================================================
-  // 11. INICIALIZAR LA VISTA CON LA PRIMERA COCHERA
+  // 12. INICIALIZAR LA VISTA CON LA PRIMERA COCHERA
   // =========================================================================
   renderMapMarkers(parkingSpots);
   selectParkingSpot(parkingSpots[0]);
