@@ -511,10 +511,10 @@ img {
   background-color: var(--navy-deep);
   background-image: 
     radial-gradient(ellipse 80% 50% at 50% -20%, rgba(30, 41, 59, 0.7), transparent),
-    linear-gradient(180deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.94) 75%, var(--navy-deep) 100%),
-    url('https://images.unsplash.com/photo-1589556264800-08ae9e129a8c?auto=format&fit=crop&w=1920&q=80');
+    linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.94) 75%, var(--navy-deep) 100%),
+    url('https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=1920&q=80');
   background-size: cover;
-  background-position: center 30%;
+  background-position: center 40%;
   background-repeat: no-repeat;
   padding: 72px 0 96px 0;
   color: var(--white);

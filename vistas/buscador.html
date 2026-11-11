@@ -229,119 +229,96 @@
 
       </div>
 
-      <!-- COLUMNA DERECHA: SIDEBAR -->
-      <aside class="parking-detail-sidebar">
-        <div class="sidebar-scrollable-body">
+      <!-- COLUMNA DERECHA: SIDEBAR (DISEÑO LIMPIO Y DESPEJADO SEGÚN MOCKUP) -->
+      <aside class="parking-detail-sidebar clean-sidebar-card" id="parkingDetailSidebar">
+        
+        <!-- FOTO SUPERIOR CON BADGE Y BOTÓN CERRAR -->
+        <div class="sidebar-hero-image-wrap">
+          <img id="sidebarMainImg" src="https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=800&q=80" alt="Vista del estacionamiento" />
           
-          <div class="garage-gallery-container">
-            <div class="gallery-main-view">
-              <img id="sidebarMainImg" src="https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=800&q=80" alt="Vista del estacionamiento" />
-              
-              <button type="button" class="gallery-top-btn btn-prev-photo" id="btnPrevPhoto" aria-label="Foto anterior">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-              </button>
+          <span class="sidebar-status-pill" id="sidebarStatusPill">
+            <span class="status-dot-green"></span>
+            <span id="sidebarStatusText">Disponible</span>
+          </span>
 
-              <button type="button" class="gallery-top-btn btn-fav-photo" id="btnFavPhoto" aria-label="Guardar favorito">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-              </button>
-
-              <span class="gallery-counter-badge" id="galleryCounter">1/5</span>
-            </div>
-
-            <div class="gallery-thumbs-row" id="galleryThumbsContainer"></div>
-          </div>
-
-          <div class="garage-header-block">
-            <h2 class="garage-name-title" id="sidebarTitle">Garage Plaza San Martín</h2>
-
-            <div class="garage-rating-status-row">
-              <div class="garage-rating-box">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 16.5 5.5 21 7.5 13.5 2 9 9 9"></polygon></svg>
-                <span id="sidebarRating">4.8</span>
-                <span class="garage-reviews-text" id="sidebarReviews">(124 reseñas)</span>
-              </div>
-              <span class="badge-status-available">
-                <span class="status-dot-green"></span>
-                <span id="sidebarStatus">Disponible ahora</span>
-              </span>
-            </div>
-
-            <div class="garage-address-row">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-              <span id="sidebarAddress">San Martín 932, Retiro, CABA</span>
-              <span class="divider-dot">|</span>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><circle cx="12" cy="5" r="2"></circle><path d="m9 20 3-6 3 6"></path><path d="m6 8 6 2 6-2"></path><path d="M12 10v4"></path></svg>
-              <span id="sidebarDistance">1.2 km</span>
-            </div>
-          </div>
-
-          <div class="garage-features-wrap" id="sidebarFeatures">
-            <span class="feature-pill-item">🚗 Techado</span>
-            <span class="feature-pill-item">⬆️ Altura máx. 2.10 m</span>
-            <span class="feature-pill-item">🛡️ Vigilancia 24hs</span>
-            <span class="feature-pill-item">📱 Acceso con QR</span>
-          </div>
-
-          <div class="pricing-capacity-grid">
-            <div>
-              <div class="column-section-title">
-                <span>Tarifas</span>
-                <a href="#tarifas" class="link-all-rates" id="btnShowAllRates">Ver todas las tarifas →</a>
-              </div>
-              <div class="rates-list-block">
-                <div class="rate-item-row">
-                  <span>Fracción (30 min)</span>
-                  <strong id="sidebarFraction">$800</strong>
-                </div>
-                <div class="rate-item-row highlight-rate">
-                  <span>Por hora</span>
-                  <strong id="sidebarPrice" style="color:#0F172A; font-size:0.875rem;">$2.500</strong>
-                </div>
-                <div class="rate-item-row">
-                  <span>12 hs (turno diurno)</span>
-                  <strong id="sidebarStay12">$18.000</strong>
-                </div>
-                <div class="rate-item-row">
-                  <span>24 hs</span>
-                  <strong id="sidebarStay24">$32.000</strong>
-                </div>
-              </div>
-            </div>
-
-            <div class="capacity-column-block">
-              <div>
-                <div class="column-section-title">
-                  <span>Capacidad en vivo</span>
-                </div>
-                <div class="capacity-progress-track">
-                  <div class="capacity-progress-fill" id="sidebarProgressFill" style="width: 80%;"></div>
-                </div>
-                <div class="capacity-stat-text" id="sidebarOccupiedPercent">80% ocupado</div>
-                <div class="capacity-alert-green" id="sidebarAvailableText">¡Solo quedan 4 cocheras!</div>
-              </div>
-
-              <div class="payment-methods-subblock">
-                <div class="payment-title-label">Medios de pago</div>
-                <div class="payment-icons-row">
-                  <span class="pay-badge-pill" title="Mercado Pago QR">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#009EE3"><circle cx="12" cy="12" r="10"/></svg> Mercado Pago
-                  </span>
-                  <span class="pay-badge-pill" title="Tarjetas">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"></line></svg> Tarjeta
-                  </span>
-                  <span class="pay-badge-pill" title="Efectivo">💵 Efectivo</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
+          <button type="button" class="sidebar-round-close-btn" id="btnCloseSidebar" aria-label="Cerrar detalle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
         </div>
 
-        <div class="sidebar-cta-footer">
-          <button type="button" class="btn-book-sidebar" id="btnBookSidebar">
-            <span>Reservar ahora</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </button>
+        <!-- CUERPO DE INFORMACIÓN LIMPIO -->
+        <div class="sidebar-clean-body">
+          
+          <!-- TÍTULO DEL GARAJE -->
+          <h2 class="sidebar-garage-name" id="sidebarTitle">Garage Plaza San Martín</h2>
+
+          <!-- RATING Y DISTANCIA -->
+          <div class="sidebar-rating-dist-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B">
+              <polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 16.5 5.5 21 7.5 13.5 2 9 9 9"></polygon>
+            </svg>
+            <span class="sidebar-rating-num" id="sidebarRating">4.8</span>
+            <span class="sidebar-reviews-num" id="sidebarReviews">(124 opiniones)</span>
+            <span class="sidebar-meta-sep">·</span>
+            <span class="sidebar-dist-text" id="sidebarDistance">a 1.2 km</span>
+          </div>
+
+          <!-- CHIPS DE CARACTERÍSTICAS (PÍLDORAS CELESTES CON ICONOS) -->
+          <div class="sidebar-chips-grid" id="sidebarFeatures">
+            <span class="feature-chip-clean">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9C2.1 11.1 2 11.6 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+              Techado
+            </span>
+            <span class="feature-chip-clean">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Vigilancia 24hs
+            </span>
+            <span class="feature-chip-clean">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              Acceso QR
+            </span>
+            <span class="feature-chip-clean">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              Carga eléctrica
+            </span>
+          </div>
+
+          <!-- DIRECCIÓN Y CÓMO LLEGAR -->
+          <div class="sidebar-location-row">
+            <div class="location-address-wrap">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.2">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+              </svg>
+              <span id="sidebarAddress">Av. Corrientes 1045, San Nicolás</span>
+            </div>
+            <a href="https://maps.google.com" class="btn-how-to-reach" id="btnHowToReach" target="_blank" rel="noopener">
+              Cómo llegar
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </a>
+          </div>
+
+          <!-- FOOTER CONTAINER CON TARIFA ESTIMADA Y BOTÓN RESERVAR -->
+          <div class="sidebar-pricing-footer-box">
+            <div class="pricing-text-group">
+              <span class="pricing-label-blue">Tarifa estimada</span>
+              <div class="pricing-amount-row">
+                <span class="pricing-price-val" id="sidebarPrice">$2.500</span>
+                <span class="pricing-unit-text">/ hora</span>
+                <span class="pricing-info-icon" title="Tarifa estándar por hora según horario">ⓘ</span>
+              </div>
+            </div>
+
+            <button type="button" class="btn-clean-reserve" id="btnBookSidebar">
+              Reservar
+            </button>
+          </div>
+
         </div>
       </aside>
 
@@ -453,8 +430,8 @@
         </div>
       </div>
 
-      <!-- FILA 2 -->
-      <div class="popular-trust-row">
+      <!-- FILA 2: ESTACIONAMIENTOS POPULARES (ANCHO COMPLETO Y DESPEJADO) -->
+      <div class="popular-full-row">
         <div class="popular-section-wrap">
           <div class="section-title-bar">
             <div>
@@ -527,7 +504,7 @@
 
             <div class="spot-card-popular" data-id="11">
               <div class="card-image-box">
-                <img src="https://images.unsplash.com/photo-1589556264800-08ae9e129a8c?auto=format&fit=crop&w=400&q=80" alt="Teatro Colón" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=400&q=80" alt="Teatro Colón" loading="lazy" />
                 <button type="button" class="btn-card-fav" aria-label="Favorito">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                 </button>
@@ -566,141 +543,216 @@
             </div>
           </div>
         </div>
-
-        <div class="trust-banner-card">
-          <div class="trust-features-list">
-            <div class="trust-feature-point">
-              <div class="trust-point-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-              </div>
-              <span class="trust-point-text">Más de 1.000 estacionamientos en CABA</span>
-            </div>
-
-            <div class="trust-feature-point">
-              <div class="trust-point-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-              </div>
-              <span class="trust-point-text">Pagos seguros y flexibles</span>
-            </div>
-
-            <div class="trust-feature-point">
-              <div class="trust-point-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              </div>
-              <span class="trust-point-text">Atención 24/7</span>
-            </div>
-          </div>
-
-          <div class="trust-car-bottom-decor">
-            <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=350&q=80" alt="Auto Parkia Movilidad" />
-          </div>
-        </div>
       </div>
 
     </div>
 
   </main>
 
-  <!-- MODAL RESERVA -->
-  <div class="reservation-modal-overlay" id="reservationModal">
-    <div class="reservation-modal-box">
-      <div class="modal-header-bar">
-        <h3>Reservar Cocheras Parkia</h3>
-        <button type="button" class="btn-close-modal" id="btnCloseModal" aria-label="Cerrar modal">✕</button>
-      </div>
-
-      <div class="modal-body-content" id="modalFormView">
-        <div class="modal-garage-summary">
-          <img src="" alt="Cochera" class="modal-garage-img" id="modalGarageImg" />
-          <div>
-            <div class="modal-garage-title" id="modalGarageTitle">Garage Plaza San Martín</div>
-            <div class="modal-garage-loc" id="modalGarageLoc">San Martín 932, Retiro, CABA</div>
-            <div style="font-size:0.75rem; font-weight:700; color:#2563EB; margin-top:2px;" id="modalPriceHour">$2.500/h</div>
+  <!-- =========================================================================
+       MODAL DE RESERVA COMPACTO Y UNIFICADO (TODO EN UNA MINI VENTANA PROLIJA)
+       ========================================================================= -->
+  <div class="reservation-modal-overlay" id="reservationModal" role="dialog" aria-modal="true" aria-labelledby="modalBookingTitle">
+    <div class="reservation-modal-box compact-single-window">
+      
+      <!-- VISTA 1: FORMULARIO INTEGRADO EN UNA SOLA MINI VENTANA -->
+      <div id="modalBookingFormView" class="modal-inner-view">
+        <div class="modal-header-bar">
+          <div class="modal-header-title-wrap">
+            <h3 id="modalBookingTitle">Reservá tu cochera</h3>
+            <span class="modal-header-subtitle">Completá los datos y asegurá tu lugar al instante</span>
           </div>
+          <button type="button" class="btn-close-modal" id="btnCloseModal" aria-label="Cerrar modal">✕</button>
         </div>
 
-        <div class="modal-form-grid">
-          <div class="modal-form-field">
-            <label>Fecha de Reserva</label>
-            <input type="date" value="2026-11-06" />
-          </div>
-          <div class="modal-form-field">
-            <label>Tipo de Vehículo</label>
-            <select>
-              <option selected>🚗 Automóvil</option>
-              <option>🚙 Camioneta / SUV</option>
-              <option>🏍️ Moto</option>
-            </select>
-          </div>
-          <div class="modal-form-field">
-            <label>Hora de Ingreso</label>
-            <input type="time" value="14:00" />
-          </div>
-          <div class="modal-form-field">
-            <label>Hora de Salida estimada</label>
-            <input type="time" value="18:00" />
-          </div>
-        </div>
-
-        <div class="modal-price-breakdown">
-          <div class="breakdown-row">
-            <span>Estadía estimada (4 horas)</span>
-            <strong id="modalSubtotal">$10.000</strong>
-          </div>
-          <div class="breakdown-row discount-row">
-            <span>Promo Exclusiva Mercado Pago (-20%)</span>
-            <strong id="modalDiscount">-$2.000</strong>
-          </div>
-          <div class="breakdown-row total-row">
-            <span>Total a pagar</span>
-            <span style="color:#059669;" id="modalTotal">$8.000</span>
-          </div>
-        </div>
-
-        <div class="modal-payment-select">
-          <label>Seleccionar Medio de Pago</label>
-          <div class="payment-options-grid">
-            <div class="pay-radio-card selected">
-              <span style="font-size:16px;">💳</span>
-              <span>Mercado Pago</span>
-            </div>
-            <div class="pay-radio-card">
-              <span style="font-size:16px;">💳</span>
-              <span>Débito / Crédito</span>
-            </div>
-            <div class="pay-radio-card">
-              <span style="font-size:16px;">💵</span>
-              <span>En garaje</span>
+        <div class="modal-body-content compact-scroll-body">
+          
+          <!-- RESUMEN DEL GARAJE -->
+          <div class="modal-garage-compact-card">
+            <img src="https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=200&q=80" alt="Cochera" class="modal-garage-mini-thumb" id="modalGarageImg" />
+            <div class="modal-garage-compact-info">
+              <div class="garage-title-row">
+                <span class="modal-garage-title" id="modalGarageTitle">Garage Plaza Italia</span>
+                <span class="badge-tag-mini" id="modalSpotBadge">Techado • 24hs</span>
+              </div>
+              <div class="modal-garage-loc" id="modalGarageLoc">Av. Santa Fe 3900, Palermo, CABA</div>
+              <div class="modal-price-pill" id="modalPriceHour">$2.500 / hora</div>
             </div>
           </div>
-        </div>
 
-        <button type="button" class="btn-confirm-checkout" id="btnConfirmBooking">
-          Confirmar y Pagar
-        </button>
+          <!-- SECCIÓN 1: FECHA Y HORARIOS LIBRES -->
+          <div class="modal-section-card">
+            <div class="section-card-heading">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              <span>Fecha y horarios (ingreso libre)</span>
+            </div>
+
+            <div class="form-row-dates">
+              <div class="form-field-item">
+                <label for="inputBookingDate">Fecha</label>
+                <input type="date" id="inputBookingDate" value="2026-11-08" />
+              </div>
+              <div class="form-field-item">
+                <label for="inputTimeFrom">Hora de entrada</label>
+                <input type="time" id="inputTimeFrom" value="10:00" />
+              </div>
+              <div class="form-field-item">
+                <label for="inputTimeTo">Hora de salida</label>
+                <input type="time" id="inputTimeTo" value="14:00" />
+              </div>
+            </div>
+
+            <div class="duration-badge-bar">
+              <span class="duration-text">⏱️ Duración estimada: <strong id="lblEstimatedDuration">4 horas</strong></span>
+            </div>
+          </div>
+
+          <!-- SECCIÓN 2: SELECCIÓN DE COCHERA / PLAZA (INTEGRADA) -->
+          <div class="modal-section-card">
+            <div class="section-card-heading-space-between">
+              <div class="section-card-heading">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                <span>Elegí tu plaza de estacionamiento</span>
+              </div>
+              <span class="current-selected-spot-badge">
+                📍 Plaza: <strong id="lblSelectedCochera">A03 (Nivel -1)</strong>
+              </span>
+            </div>
+
+            <div class="cocheras-compact-matrix" id="cocherasCompactMatrix">
+              <!-- Fila A -->
+              <button type="button" class="compact-spot-btn available" data-spot="A01" data-level="Nivel -1">A01</button>
+              <button type="button" class="compact-spot-btn available" data-spot="A02" data-level="Nivel -1">A02</button>
+              <button type="button" class="compact-spot-btn selected" data-spot="A03" data-level="Nivel -1">
+                <span>A03</span>
+                <span class="spot-indicator-star">★</span>
+              </button>
+              <button type="button" class="compact-spot-btn occupied" data-spot="A04" disabled title="Ocupada">A04</button>
+              
+              <!-- Fila B -->
+              <button type="button" class="compact-spot-btn available" data-spot="B01" data-level="Nivel -1">B01</button>
+              <button type="button" class="compact-spot-btn occupied" data-spot="B02" disabled title="Ocupada">B02</button>
+              <button type="button" class="compact-spot-btn available" data-spot="B03" data-level="Nivel -1">B03</button>
+              <button type="button" class="compact-spot-btn available" data-spot="B04" data-level="Nivel -1">B04</button>
+            </div>
+
+            <div class="cocheras-legend-compact">
+              <span><span class="legend-dot green"></span> Libre</span>
+              <span><span class="legend-dot yellow"></span> Tu plaza</span>
+              <span><span class="legend-dot gray"></span> Ocupada</span>
+            </div>
+          </div>
+
+          <!-- SECCIÓN 3: DATOS DEL VEHÍCULO -->
+          <div class="modal-section-card">
+            <div class="section-card-heading">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9C2.1 11.1 2 11.6 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
+              <span>Datos del vehículo</span>
+            </div>
+
+            <div class="form-row-vehicle">
+              <div class="form-field-item">
+                <label for="inputBookingPlate">Patente / Matrícula</label>
+                <input type="text" id="inputBookingPlate" placeholder="AE 123 CD" value="AE 123 CD" maxlength="9" autocomplete="off" class="input-plate-style" />
+              </div>
+              <div class="form-field-item">
+                <label for="selectBookingVehicleType">Tipo de vehículo</label>
+                <select id="selectBookingVehicleType">
+                  <option value="Auto" selected>🚗 Auto</option>
+                  <option value="Camioneta / SUV">🚙 Camioneta / SUV</option>
+                  <option value="Moto">🏍️ Moto</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECCIÓN 4: RESUMEN Y PAGO -->
+          <div class="modal-price-breakdown-compact">
+            <div class="breakdown-line">
+              <span id="lblRateLine">Estadía estimada (4 horas a $2.500/h)</span>
+              <strong id="lblSubtotal">$10.000</strong>
+            </div>
+            <div class="breakdown-line discount">
+              <span>Promo Exclusiva Mercado Pago (-20%)</span>
+              <strong id="lblDiscount">-$2.000</strong>
+            </div>
+            <div class="breakdown-line total">
+              <span>Total a pagar</span>
+              <strong id="lblTotal">$8.000</strong>
+            </div>
+          </div>
+
+          <button type="button" class="btn-confirm-checkout-full" id="btnConfirmReservation">
+            <span>Confirmar y Reservar</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+
+        </div>
       </div>
 
-      <div class="modal-body-content success-ticket-box" id="modalSuccessView">
-        <div class="success-check-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </div>
-        <h4 style="font-size:1.25rem; font-weight:800; color:#0F172A; margin:0;">¡Reserva Confirmada con Éxito!</h4>
-        <p style="font-size:0.8125rem; color:#64748B; margin:0;">Presentá este código QR en el lector del acceso para ingresar automáticamente.</p>
-        
-        <div class="qr-code-placeholder">
-          <svg width="100" height="100" viewBox="0 0 24 24" fill="#0F172A">
-            <path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm10 0h2v2h-2v-2zm4 0h2v2h-2v-2zm-4 4h2v2h-2v-2zm4 0h4v2h-4v-2zm-2-2h2v2h-2v-2zm2-2h2v2h-2v-2zm0 6h4v2h-4v-2zM5 5h2v2H5V5zm12 0h2v2h-2V5zM5 17h2v2H5v-2z"/>
-          </svg>
-        </div>
+      <!-- VISTA 2: TICKET CONFIRMADO CON CÓDIGO QR DE ALTA DEFINICIÓN -->
+      <div id="modalConfirmationTicketView" class="modal-inner-view step-confirmation-view" style="display:none;">
+        <div class="confirmation-success-wrap">
+          
+          <div class="success-top-badge">
+            <div class="green-circle-check">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <h2 class="success-main-title">¡Tu reserva fue confirmada!</h2>
+            <p class="success-sub-text">Te enviamos el comprobante a tu correo y podés presentarlo al llegar.</p>
+          </div>
 
-        <div style="background:#F1F5F9; padding:8px 16px; border-radius:8px; font-size:0.84rem; font-weight:800; color:#1E3A8A;">
-          Código: <span id="successBookingCode">PRK-849201</span>
-        </div>
+          <!-- TICKET DIGITAL CON QR DE ALTA CALIDAD -->
+          <div class="digital-boarding-pass-card" id="digitalTicketCard">
+            <div class="ticket-left-info">
+              <div class="ticket-booking-label">Código de reserva</div>
+              <div class="ticket-booking-code" id="ticketBookingCode">#PK-8492</div>
 
-        <button type="button" class="btn-confirm-checkout" id="btnFinishReservation" style="width:100%; margin-top:8px;">
-          Entendido, ver mis reservas
-        </button>
+              <div class="ticket-meta-items">
+                <div class="ticket-meta-row">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                  <span id="ticketGarageSpot">Garage Plaza Italia · A03 - Nivel -1</span>
+                </div>
+                <div class="ticket-meta-row">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <span id="ticketDateTime">Sáb. 8 nov. · 10:00 - 14:00</span>
+                </div>
+                <div class="ticket-meta-row">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9C2.1 11.1 2 11.6 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
+                  <span id="ticketVehicle">Auto · Patente AE 123 CD</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CÓDIGO QR VECTORIAL DE ALTA DEFINICIÓN -->
+            <div class="ticket-right-qr">
+              <div class="qr-canvas-holder" id="qrCanvasHolder">
+                <!-- SVG Vectorial QR Nítido -->
+              </div>
+              <span class="qr-scan-hint">Escanear al ingresar</span>
+            </div>
+          </div>
+
+          <!-- Botones de Acción del Ticket -->
+          <div class="ticket-actions-row">
+            <button type="button" class="btn-ticket-map" id="btnTicketViewMap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 19 21 12 17 5 21 12 2"></polygon></svg>
+              <span>Ver en el mapa</span>
+            </button>
+            <button type="button" class="btn-ticket-download" id="btnTicketDownload">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>Descargar ticket</span>
+            </button>
+            <button type="button" class="btn-ticket-close" id="btnTicketClose">
+              <span>Cerrar</span>
+            </button>
+          </div>
+
+        </div>
       </div>
+
     </div>
   </div>
 
@@ -708,3 +760,4 @@
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="../js/parkia-app.js"></script>
 </body>
+</html>
