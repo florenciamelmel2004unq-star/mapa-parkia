@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }).setView([centerLat, centerLng], zoomLevel);
 
   // Capa base limpia y profesional CARTO Voyager
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=cb1_4dp3_1_c49551f0a2b6e42178ceed8e', {
     attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; OpenStreetMap',
     maxZoom: 19
   }).addTo(map);
