@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PARKIA — Encontrá tu lugar. Reservá sin complicaciones.</title>
+  
+  <!-- SEO & Metatags -->
+  <meta name="description" content="Plataforma de búsqueda y reserva de estacionamientos en Buenos Aires. Compará precios, verificá disponibilidad y asegurá tu lugar antes de llegar." />
+  <meta name="keywords" content="estacionamiento, cocheras, parking CABA, reservar estacionamiento, Palermo, Recoleta, Belgrano, Buenos Aires" />
+  <meta property="og:title" content="PARKIA — Encontrá tu lugar. Reservá sin complicaciones." />
+  <meta property="og:description" content="Conectá con los mejores estacionamientos comerciales, privados y particulares de Buenos Aires." />
+  <meta property="og:type" content="website" />
+
+  <!-- Tipografías oficiales: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Estilos Modern Mobility -->
+  <link rel="stylesheet" href="css/home.css" />
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. HEADER — NAVEGACIÓN PRINCIPAL (STICKY)
+       ========================================================================= -->
+  <header class="parkia-header" id="mainHeader">
+    <div class="container header-container">
+      
+      <!-- Logo PARKIA -->
+      <a href="index.html" class="brand-logo" aria-label="PARKIA Inicio">
+        <div class="brand-icon">
+          <!-- Pin estilizado con punto central -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+          </svg>
+        </div>
+        <span class="brand-name">Parkia<span>.</span></span>
+      </a>
+
+      <!-- Menú central -->
+      <nav class="header-nav" aria-label="Navegación principal">
+        <a href="vistas/buscador.html" class="nav-link">Buscar estacionamientos</a>
+        <a href="#como-funciona" class="nav-link">Cómo funciona</a>
+        <a href="#para-empresas" class="nav-link">Para empresas</a>
+        <a href="#confianza-seguridad" class="nav-link">Ayuda</a>
+      </nav>
+
+      <!-- Lado derecho: Acciones de usuario -->
+      <div class="header-actions">
+        
+        <!-- Píldora para simular cambio entre Modo Invitado y Modo Autenticado -->
+        <button class="session-demo-pill" id="sessionToggleBtn" title="Hacé clic para alternar entre vista de Invitado y Conectado">
+          <span class="dot"></span> Vista Invitado
+        </button>
+
+        <div class="nav-divider"></div>
+
+        <!-- MODO INVITADO (por defecto) -->
+        <div class="header-guest-section" id="headerGuestSection">
+          <button type="button" class="link-login" id="btnOpenLogin">Iniciar sesión</button>
+          <button type="button" class="btn btn-register" id="btnOpenRegister">Registrarse</button>
+        </div>
+
+        <!-- MODO USUARIO AUTENTICADO (cuando hay sesión iniciada) -->
+        <div class="header-user-section" id="headerUserSection">
+          <a href="vistas/reservas.html" class="btn-reservas-shortcut" title="Ver mis reservas">
+            <i data-lucide="ticket" style="width:16px;height:16px;"></i>
+            <span>Mis reservas</span>
+          </a>
+
+          <div class="user-menu-trigger" id="userMenuTrigger" tabindex="0" aria-haspopup="true" aria-expanded="false">
+            <div class="user-avatar-circle" id="userAvatarInitials">SG</div>
+            <i data-lucide="chevron-down" style="width:15px;height:15px;color:#94A3B8;"></i>
+
+            <!-- Menú desplegable del usuario -->
+            <div class="user-dropdown" id="userDropdown">
+              <div class="user-dropdown-header">
+                <div class="user-dropdown-name" id="userDisplayName">Santiago Gómez</div>
+                <div class="user-dropdown-email" id="userDisplayEmail">santiago@parkia.com</div>
+              </div>
+              <a href="vistas/perfil.html" class="user-dropdown-item">
+                <i data-lucide="user" style="width:16px;height:16px;"></i> Mi perfil
+              </a>
+              <a href="vistas/reservas.html" class="user-dropdown-item">
+                <i data-lucide="calendar" style="width:16px;height:16px;"></i> Mis reservas
+              </a>
+              <a href="vistas/historial.html" class="user-dropdown-item">
+                <i data-lucide="clock" style="width:16px;height:16px;"></i> Historial de estadías
+              </a>
+              <a href="#" class="user-dropdown-item" onclick="alert('Sección de favoritos disponible en la próxima actualización.'); return false;">
+                <i data-lucide="bookmark" style="width:16px;height:16px;"></i> Cocheras guardadas
+              </a>
+              <a href="#" class="user-dropdown-item logout" id="logoutBtn">
+                <i data-lucide="log-out" style="width:16px;height:16px;"></i> Cerrar sesión
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón menú móvil -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menú">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Drawer Menú Móvil -->
+  <div class="modal-backdrop" id="mobileDrawer">
+    <div class="modal-dialog" style="max-width: 320px; height: 100%; border-radius: 0; margin-left: auto;">
+      <div class="modal-header">
+        <span class="brand-name" style="color:var(--navy-deep);">Parkia<span style="color:var(--amber-primary);">.</span></span>
+        <button class="modal-close-btn" id="mobileDrawerClose"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body" style="display:flex; flex-direction:column; gap:16px;">
+        <a href="vistas/buscador.html" class="nav-link" style="color:var(--navy-deep); font-size:1.05rem;">Buscar estacionamientos</a>
+        <a href="#como-funciona" class="nav-link" style="color:var(--navy-deep); font-size:1.05rem;" onclick="document.getElementById('mobileDrawer').classList.remove('open');">Cómo funciona</a>
+        <a href="#para-empresas" class="nav-link" style="color:var(--navy-deep); font-size:1.05rem;" onclick="document.getElementById('mobileDrawer').classList.remove('open');">Para empresas</a>
+        <a href="#confianza-seguridad" class="nav-link" style="color:var(--navy-deep); font-size:1.05rem;" onclick="document.getElementById('mobileDrawer').classList.remove('open');">Ayuda</a>
+        <div style="border-top:1px solid var(--border-light); margin:12px 0;"></div>
+        <button class="btn btn-outline" id="btnMobileLogin" style="width:100%;">Iniciar sesión</button>
+        <button class="btn btn-primary" id="btnMobileRegister" style="width:100%;">Registrarse</button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- =========================================================================
+         2. HERO SECTION — PRESENTACIÓN PRINCIPAL
+         ========================================================================= -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          
+          <h1 class="hero-title">
+            Encontrá tu lugar.<br />
+            <span class="highlight-amber">Reservá</span> sin complicaciones.
+          </h1>
+
+          <p class="hero-subtitle">
+            Encontrá estacionamientos cerca de tu destino, compará precios y asegurá tu lugar antes de llegar.
+          </p>
+
+          <!-- BUSCADOR DESTACADO -->
+          <div class="hero-search-wrapper">
+            <div class="hero-search-card" role="search" aria-label="Buscador de estacionamientos">
+              
+              <!-- Segmento 1: Ubicación -->
+              <div class="search-segment" id="segmentLocation" tabindex="0">
+                <div class="segment-icon">
+                  <i data-lucide="map-pin" style="width:18px;height:18px;"></i>
+                </div>
+                <div class="segment-info">
+                  <span class="segment-label">Ubicación</span>
+                  <div id="displayLocation">
+                    <span class="segment-placeholder">¿Dónde querés estacionar?</span>
+                  </div>
+                </div>
+
+                <!-- Popover Ubicación -->
+                <div class="search-popover popover-location" id="popoverLocation">
+                  <div class="popover-input-group">
+                    <i data-lucide="search" class="icon" style="width:16px;height:16px;"></i>
+                    <input type="text" id="inputLocation" placeholder="Ingresá barrio, calle o punto de interés..." autocomplete="off" />
+                  </div>
+                  <div class="popover-title-sm">Zonas populares en CABA</div>
+                  <div class="zone-suggestions">
+                    <div class="zone-item" data-zone="Palermo, CABA">
+                      <i data-lucide="map-pin" class="zone-pin" style="width:16px;height:16px;"></i>
+                      <div>
+                        <div class="zone-name">Palermo</div>
+                        <div class="zone-desc">Plaza Italia, Soho, Hollywood</div>
+                      </div>
+                    </div>
+                    <div class="zone-item" data-zone="Recoleta, CABA">
+                      <i data-lucide="map-pin" class="zone-pin" style="width:16px;height:16px;"></i>
+                      <div>
+                        <div class="zone-name">Recoleta</div>
+                        <div class="zone-desc">Facultades, Cementerio, Av. Santa Fe</div>
+                      </div>
+                    </div>
+                    <div class="zone-item" data-zone="Belgrano, CABA">
+                      <i data-lucide="map-pin" class="zone-pin" style="width:16px;height:16px;"></i>
+                      <div>
+                        <div class="zone-name">Belgrano</div>
+                        <div class="zone-desc">Barrancas, Av. Cabildo, Juramento</div>
+                      </div>
+                    </div>
+                    <div class="zone-item" data-zone="Microcentro, CABA">
+                      <i data-lucide="map-pin" class="zone-pin" style="width:16px;height:16px;"></i>
+                      <div>
+                        <div class="zone-name">Microcentro / Obelisco</div>
+                        <div class="zone-desc">Zona bancaria, Teatros, 9 de Julio</div>
+                      </div>
+                    </div>
+                    <div class="zone-item" data-zone="Puerto Madero, CABA">
+                      <i data-lucide="map-pin" class="zone-pin" style="width:16px;height:16px;"></i>
+                      <div>
+                        <div class="zone-name">Puerto Madero</div>
+                        <div class="zone-desc">Diques, Puente de la Mujer, Oficinas</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="search-divider"></div>
+
+              <!-- Segmento 2 & 3: Fecha y Horario (Entrada y Salida libres) -->
+              <div class="search-segment" id="segmentDateTime" tabindex="0">
+                <div class="segment-icon">
+                  <i data-lucide="calendar-clock" style="width:18px;height:18px;"></i>
+                </div>
+                <div class="segment-info">
+                  <span class="segment-label">Fecha y Horario</span>
+                  <div id="displayDateTime">
+                    <span class="segment-value">Hoy · 14:00 - 18:00</span>
+                  </div>
+                </div>
+
+                <!-- Popover Fecha y Horario -->
+                <div class="search-popover popover-datetime" id="popoverDateTime">
+                  <div class="datetime-grid">
+                    <div class="datetime-field" style="grid-column: span 2;">
+                      <label for="inputDate">Fecha de reserva</label>
+                      <input type="date" id="inputDate" />
+                    </div>
+                    <div class="datetime-field">
+                      <label for="inputStartTime">Hora de entrada</label>
+                      <input type="time" id="inputStartTime" value="14:00" />
+                    </div>
+                    <div class="datetime-field">
+                      <label for="inputEndTime">Hora de salida</label>
+                      <input type="time" id="inputEndTime" value="18:00" />
+                    </div>
+                  </div>
+
+                  <div class="popover-title-sm">Sugerencias rápidas de duración</div>
+                  <div class="quick-durations">
+                    <button type="button" class="chip-duration" data-hours="2">2 horas</button>
+                    <button type="button" class="chip-duration active" data-hours="4">4 horas</button>
+                    <button type="button" class="chip-duration" data-hours="8">8 horas</button>
+                    <button type="button" class="chip-duration" data-hours="12">12 horas (Día)</button>
+                  </div>
+
+                  <div style="margin-top: 18px; text-align: right;">
+                    <button type="button" class="btn btn-primary" id="btnApplyDateTime" style="padding: 8px 18px; font-size: 0.875rem;">Aplicar horario</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="search-divider"></div>
+
+              <!-- Segmento 4: Tipo de vehículo -->
+              <div class="search-segment" id="segmentVehicle" tabindex="0">
+                <div class="segment-icon">
+                  <i data-lucide="car" style="width:18px;height:18px;"></i>
+                </div>
+                <div class="segment-info">
+                  <span class="segment-label">Vehículo</span>
+                  <div id="displayVehicle">
+                    <span class="segment-value">Auto</span>
+                  </div>
+                </div>
+
+                <!-- Popover Vehículo -->
+                <div class="search-popover popover-vehicle" id="popoverVehicle">
+                  <div class="popover-title-sm">Seleccioná el tipo</div>
+                  <div class="vehicle-options">
+                    <div class="vehicle-opt selected" data-vehicle="Auto">
+                      <i data-lucide="car" style="width:18px;height:18px;"></i>
+                      <div>
+                        <div class="v-title">Auto</div>
+                        <div class="v-desc">Sedán, hatchback estándar</div>
+                      </div>
+                    </div>
+                    <div class="vehicle-opt" data-vehicle="Moto">
+                      <i data-lucide="bike" style="width:18px;height:18px;"></i>
+                      <div>
+                        <div class="v-title">Moto</div>
+                        <div class="v-desc">Ciclomotores y motos</div>
+                      </div>
+                    </div>
+                    <div class="vehicle-opt" data-vehicle="Camioneta">
+                      <i data-lucide="truck" style="width:18px;height:18px;"></i>
+                      <div>
+                        <div class="v-title">Camioneta / SUV</div>
+                        <div class="v-desc">4x4, pick-up, monovolumen</div>
+                      </div>
+                    </div>
+                    <div class="vehicle-opt" data-vehicle="Utilitario">
+                      <i data-lucide="bus" style="width:18px;height:18px;"></i>
+                      <div>
+                        <div class="v-title">Utilitario / Van</div>
+                        <div class="v-desc">Furgón comercial</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Botón principal de Búsqueda -->
+              <button type="button" class="btn-search-cta" id="btnHeroSearch" aria-label="Buscar estacionamientos">
+                <i data-lucide="search" style="width:18px;height:18px;"></i>
+                <span>Buscar</span>
+              </button>
+
+            </div>
+          </div>
+
+          <!-- Indicadores de Confianza Institucionales (Sin datos ficticios) -->
+          <div class="hero-trust-badges">
+            <div class="trust-badge">
+              <span class="trust-badge-icon"><i data-lucide="shield-check" style="width:18px;height:18px;"></i></span>
+              <span>Reservas seguras y garantizadas</span>
+            </div>
+            <div class="trust-badge">
+              <span class="trust-badge-icon"><i data-lucide="badge-check" style="width:18px;height:18px;"></i></span>
+              <span>Establecimientos verificados</span>
+            </div>
+            <div class="trust-badge">
+              <span class="trust-badge-icon"><i data-lucide="receipt" style="width:18px;height:18px;"></i></span>
+              <span>Tarifas transparentes sin sorpresas</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         3. SECCIÓN: CÓMO FUNCIONA PARKIA
+         ========================================================================= -->
+    <section class="section section-alt" id="como-funciona">
+      <div class="container">
+        
+        <div class="section-header">
+          <span class="section-tag">Paso a paso</span>
+          <h2 class="section-title">Estacionar nunca fue tan fácil.</h2>
+          <p class="section-desc">Encontrá, reservá y estacioná en pocos pasos con total tranquilidad y rapidez.</p>
+        </div>
+
+        <div class="how-it-works-grid">
+          
+          <!-- Lista de 3 pasos -->
+          <div class="steps-list">
+            
+            <!-- Paso 1 -->
+            <div class="step-card">
+              <div class="step-number-badge">1</div>
+              <div class="step-body">
+                <h3>PASO 1 — Buscá tu destino</h3>
+                <p>Ingresá una dirección o seleccioná una zona para descubrir estacionamientos cercanos a tu lugar de llegada en tiempo real.</p>
+              </div>
+            </div>
+
+            <!-- Paso 2 -->
+            <div class="step-card">
+              <div class="step-number-badge">2</div>
+              <div class="step-body">
+                <h3>PASO 2 — Elegí tu estacionamiento</h3>
+                <p>Compará precios, servicios, comodidades, disponibilidad y seleccioná el espacio que mejor se adapte a tus necesidades.</p>
+              </div>
+            </div>
+
+            <!-- Paso 3 -->
+            <div class="step-card">
+              <div class="step-number-badge">3</div>
+              <div class="step-body">
+                <h3>PASO 3 — Reservá y estacioná</h3>
+                <p>Confirmá tu reserva, obtené tu comprobante digital y presentá tu código de acceso al ingresar sin demoras ni vueltas.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Tarjeta visual complementaria (matching mockup) -->
+          <div class="how-visual-card">
+            <img src="https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=800&q=80" alt="Estacionamiento moderno y seguro" loading="lazy" />
+            <div class="how-visual-pill">
+              <span class="pin-dot"></span>
+              <span>Tu lugar, siempre.</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         4. SECCIÓN: ESTACIONAMIENTOS RECOMENDADOS
+         ========================================================================= -->
+    <section class="section" id="estacionamientos-destacados">
+      <div class="container">
+        
+        <div class="section-header">
+          <span class="section-tag">Selección de la plataforma</span>
+          <h2 class="section-title">Estacionamientos recomendados</h2>
+          <p class="section-desc">Espacios destacados por conductores, con acceso ágil y comodidades verificadas en puntos estratégicos.</p>
+        </div>
+
+        <!-- Chips de filtros interactivos -->
+        <div class="filters-bar" role="tablist" aria-label="Filtros de estacionamientos">
+          <button class="filter-chip active" data-filter="all">Todos</button>
+          <button class="filter-chip" data-filter="destacado">Destacados</button>
+          <button class="filter-chip" data-filter="24hs">Abierto 24hs</button>
+          <button class="filter-chip" data-filter="techado">Techado</button>
+          <button class="filter-chip" data-filter="electrico">Carga eléctrica</button>
+          <button class="filter-chip" data-filter="vigilancia">Vigilancia</button>
+        </div>
+
+        <!-- Grid de tarjetas de recomendados -->
+        <div class="spots-grid">
+          
+          <!-- Card 1: Patrocinado / Destacado -->
+          <div class="spot-card" data-features="destacado 24hs techado electrico vigilancia">
+            <div class="spot-media">
+              <img src="https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?auto=format&fit=crop&w=600&q=80" alt="Garage Plaza Italia" loading="lazy" />
+              <span class="spot-badge-patrocinado" title="Resultado promocionado por el establecimiento">Patrocinado</span>
+              <span class="spot-badge-disponibilidad available">
+                <span class="status-dot"></span> Disponible
+              </span>
+            </div>
+            <div class="spot-body">
+              <div class="spot-rating-row">
+                <div class="spot-rating">
+                  <i data-lucide="star" class="star-icon" style="width:14px;height:14px;fill:currentColor;"></i>
+                  <span>4.8</span>
+                  <span class="spot-reviews-count">(320)</span>
+                </div>
+                <span class="spot-distance">a 1.1 km de destino</span>
+              </div>
+              <h3 class="spot-title">Garage Plaza Italia</h3>
+              <p class="spot-address">
+                <i data-lucide="map-pin" style="width:14px;height:14px;color:var(--text-muted);"></i>
+                Av. Santa Fe 4150, Palermo
+              </p>
+              <div class="spot-tags">
+                <span class="spot-tag">Techado</span>
+                <span class="spot-tag">Vigilancia 24hs</span>
+                <span class="spot-tag">Carga eléctrica</span>
+              </div>
+              <div class="spot-footer">
+                <div class="spot-price-box">
+                  <span class="spot-price-label">Tarifa estimada</span>
+                  <div class="spot-price-val">$2.500 <span>/ hora</span></div>
+                </div>
+                <a href="vistas/detalle.html?id=1" class="btn btn-spot-view">Ver estacionamiento</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="spot-card" data-features="techado vigilancia 24hs">
+            <div class="spot-media">
+              <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=600&q=80" alt="Parking Recoleta Mall" loading="lazy" />
+              <span class="spot-badge-disponibilidad available">
+                <span class="status-dot"></span> Disponible
+              </span>
+            </div>
+            <div class="spot-body">
+              <div class="spot-rating-row">
+                <div class="spot-rating">
+                  <i data-lucide="star" class="star-icon" style="width:14px;height:14px;fill:currentColor;"></i>
+                  <span>4.9</span>
+                  <span class="spot-reviews-count">(410)</span>
+                </div>
+                <span class="spot-distance">a 650 m de destino</span>
+              </div>
+              <h3 class="spot-title">Estacionamiento Recoleta Central</h3>
+              <p class="spot-address">
+                <i data-lucide="map-pin" style="width:14px;height:14px;color:var(--text-muted);"></i>
+                Vicente López 2050, Recoleta
+              </p>
+              <div class="spot-tags">
+                <span class="spot-tag">Techado</span>
+                <span class="spot-tag">Vigilancia privada</span>
+                <span class="spot-tag">Acceso con QR</span>
+              </div>
+              <div class="spot-footer">
+                <div class="spot-price-box">
+                  <span class="spot-price-label">Tarifa estimada</span>
+                  <div class="spot-price-val">$2.800 <span>/ hora</span></div>
+                </div>
+                <a href="vistas/detalle.html?id=2" class="btn btn-spot-view">Ver estacionamiento</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Pocos lugares -->
+          <div class="spot-card" data-features="destacado techado vigilancia">
+            <div class="spot-media">
+              <img src="https://images.unsplash.com/photo-1621929747188-0b4dc28498d2?auto=format&fit=crop&w=600&q=80" alt="Belgrano Station Parking" loading="lazy" />
+              <span class="spot-badge-patrocinado" title="Resultado promocionado por el establecimiento">Patrocinado</span>
+              <span class="spot-badge-disponibilidad few">
+                <span class="status-dot"></span> Pocos lugares
+              </span>
+            </div>
+            <div class="spot-body">
+              <div class="spot-rating-row">
+                <div class="spot-rating">
+                  <i data-lucide="star" class="star-icon" style="width:14px;height:14px;fill:currentColor;"></i>
+                  <span>4.7</span>
+                  <span class="spot-reviews-count">(180)</span>
+                </div>
+                <span class="spot-distance">a 900 m de destino</span>
+              </div>
+              <h3 class="spot-title">Belgrano Station Parking</h3>
+              <p class="spot-address">
+                <i data-lucide="map-pin" style="width:14px;height:14px;color:var(--text-muted);"></i>
+                Av. Cabildo 2180, Belgrano
+              </p>
+              <div class="spot-tags">
+                <span class="spot-tag">Techado</span>
+                <span class="spot-tag">Cámaras 24hs</span>
+                <span class="spot-tag">Elevador</span>
+              </div>
+              <div class="spot-footer">
+                <div class="spot-price-box">
+                  <span class="spot-price-label">Tarifa estimada</span>
+                  <div class="spot-price-val">$2.600 <span>/ hora</span></div>
+                </div>
+                <a href="vistas/detalle.html?id=3" class="btn btn-spot-view">Ver estacionamiento</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         5. SECCIÓN: OFERTAS Y BENEFICIOS EXCLUSIVOS
+         ========================================================================= -->
+    <section class="section section-alt" id="ofertas-beneficios">
+      <div class="container">
+        
+        <div class="section-header">
+          <span class="section-tag">Ahorro inteligente</span>
+          <h2 class="section-title">Aprovechá beneficios exclusivos</h2>
+          <p class="section-desc">Programá tus estadías con antelación y accedé a ventajas tarifarias diseñadas para tu movilidad urbana.</p>
+        </div>
+
+        <div class="promos-grid">
+          
+          <!-- Promo 1 -->
+          <div class="promo-card">
+            <span class="promo-badge-tag">Primera reserva</span>
+            <div class="promo-discount-num">15% OFF</div>
+            <h3 class="promo-title">Bienvenido a PARKIA</h3>
+            <p class="promo-desc">Disfrutá de un descuento especial en tu primera reserva confirmada a través de la plataforma.</p>
+            <div class="promo-footer">
+              <span>Cupón de bienvenida</span>
+              <span class="promo-code-box">PARKIA15</span>
+            </div>
+          </div>
+
+          <!-- Promo 2 -->
+          <div class="promo-card">
+            <span class="promo-badge-tag">Franja nocturna</span>
+            <div class="promo-discount-num">Tarifa Plana</div>
+            <h3 class="promo-title">Noches y fines de semana</h3>
+            <p class="promo-desc">Estadías protegidas de 20:00 a 08:00 hs con precio fijo en estacionamientos adheridos.</p>
+            <div class="promo-footer">
+              <span>Automático al reservar</span>
+              <span class="promo-code-box">NOCHE-SEGURA</span>
+            </div>
+          </div>
+
+          <!-- Promo 3 -->
+          <div class="promo-card">
+            <span class="promo-badge-tag">Estadía prolongada</span>
+            <div class="promo-discount-num">Hasta 25% OFF</div>
+            <h3 class="promo-title">Estadías mayores a 8 hs</h3>
+            <p class="promo-desc">Ideal para jornadas de trabajo o viajes. Cuantas más horas reservás, menor es el costo unitario.</p>
+            <div class="promo-footer">
+              <span>Descuento progresivo</span>
+              <span class="promo-code-box">LONGSTAY</span>
+            </div>
+          </div>
+
+          <!-- Promo 4 -->
+          <div class="promo-card">
+            <span class="promo-badge-tag">Alianzas y pagos</span>
+            <div class="promo-discount-num">Reintegros</div>
+            <h3 class="promo-title">Medios de pago asociados</h3>
+            <p class="promo-desc">Beneficios y reintegros con tarjetas y billeteras electrónicas seleccionadas.</p>
+            <div class="promo-footer">
+              <span>Entidades habilitadas</span>
+              <span class="promo-code-box">BENEFICIOS</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="text-align: center; margin-top: 32px;">
+          <small style="color: var(--text-muted); font-size: 0.8125rem;">
+            * Beneficios y descuentos aplicables en cocheras y estacionamientos adheridos de la Ciudad de Buenos Aires. Sujetos a disponibilidad de plazas.
+          </small>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         6. SECCIÓN: EXPLORAR POR ZONA (CABA)
+         ========================================================================= -->
+    <section class="section" id="explorar-zonas">
+      <div class="container">
+        
+        <div class="section-header">
+          <span class="section-tag">Cobertura en Buenos Aires</span>
+          <h2 class="section-title">Encontrá estacionamiento donde lo necesitás</h2>
+          <p class="section-desc">Seleccioná tu barrio o punto de interés para ver los garajes y cocheras disponibles en esa ubicación.</p>
+        </div>
+
+        <div class="zones-grid">
+          
+          <!-- Palermo -->
+          <a href="vistas/buscador.html?q=Palermo" class="zone-card" aria-label="Estacionamientos en Palermo">
+            <img src="https://images.unsplash.com/photo-1589556264800-08ae9e129a8c?auto=format&fit=crop&w=700&q=80" alt="Palermo, Buenos Aires" loading="lazy" />
+            <div class="zone-card-overlay">
+              <h3 class="zone-card-name">Palermo</h3>
+              <p class="zone-card-desc">Soho, Hollywood, Plaza Italia y polo gastronómico</p>
+              <span class="zone-card-cta">Explorar cocheras <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></span>
+            </div>
+          </a>
+
+          <!-- Recoleta -->
+          <a href="vistas/buscador.html?q=Recoleta" class="zone-card" aria-label="Estacionamientos en Recoleta">
+            <img src="https://images.unsplash.com/photo-1544984243-ec57ea16fe25?auto=format&fit=crop&w=700&q=80" alt="Recoleta, Buenos Aires" loading="lazy" />
+            <div class="zone-card-overlay">
+              <h3 class="zone-card-name">Recoleta</h3>
+              <p class="zone-card-desc">Museos, facultades, hoteles y zona comercial</p>
+              <span class="zone-card-cta">Explorar cocheras <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></span>
+            </div>
+          </a>
+
+          <!-- Belgrano -->
+          <a href="vistas/buscador.html?q=Belgrano" class="zone-card" aria-label="Estacionamientos en Belgrano">
+            <img src="https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&w=700&q=80" alt="Belgrano, Buenos Aires" loading="lazy" />
+            <div class="zone-card-overlay">
+              <h3 class="zone-card-name">Belgrano</h3>
+              <p class="zone-card-desc">Av. Cabildo, Juramento, Barrancas y residencias</p>
+              <span class="zone-card-cta">Explorar cocheras <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></span>
+            </div>
+          </a>
+
+          <!-- Microcentro -->
+          <a href="vistas/buscador.html?q=Microcentro" class="zone-card" aria-label="Estacionamientos en Microcentro">
+            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80" alt="Microcentro, Buenos Aires" loading="lazy" />
+            <div class="zone-card-overlay">
+              <h3 class="zone-card-name">Microcentro</h3>
+              <p class="zone-card-desc">Obelisco, teatros, bancos y oficinas corporativas</p>
+              <span class="zone-card-cta">Explorar cocheras <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></span>
+            </div>
+          </a>
+
+          <!-- Retiro -->
+          <a href="vistas/buscador.html?q=Retiro" class="zone-card" aria-label="Estacionamientos en Retiro">
+            <img src="https://images.unsplash.com/photo-1477959858617-67f30bc75b82?auto=format&fit=crop&w=700&q=80" alt="Retiro, Buenos Aires" loading="lazy" />
+            <div class="zone-card-overlay">
+              <h3 class="zone-card-name">Retiro</h3>
+              <p class="zone-card-desc">Plaza San Martín, Catalinas Norte y terminales</p>
+              <span class="zone-card-cta">Explorar cocheras <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></span>
+            </div>
+          </a>
+
+          <!-- Puerto Madero -->
+          <a href="vistas/buscador.html?q=Puerto%20Madero" class="zone-card" aria-label="Estacionamientos en Puerto Madero">
+            <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=700&q=80" alt="Puerto Madero, Buenos Aires" loading="lazy" />
+            <div class="zone-card-overlay">
+              <h3 class="zone-card-name">Puerto Madero</h3>
+              <p class="zone-card-desc">Diques, torres corporativas y circuito gastronómico</p>
+              <span class="zone-card-cta">Explorar cocheras <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></span>
+            </div>
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         7. SECCIÓN: PARA PROPIETARIOS Y EMPRESAS (B2B COMERCIAL)
+         ========================================================================= -->
+    <section class="container" id="para-empresas">
+      <div class="b2b-section">
+        <div class="b2b-grid">
+          
+          <div class="b2b-content">
+            <span class="section-tag">Soluciones para Garajes y Empresas</span>
+            <h2>Tu estacionamiento también puede formar parte de PARKIA</h2>
+            <p>Conectá tu establecimiento con nuevos conductores, administrá tus espacios y potenciá tus reservas desde una sola plataforma profesional.</p>
+            
+            <div class="b2b-actions">
+              <button type="button" class="btn btn-primary" id="btnOpenB2B">Publicá tu estacionamiento</button>
+              <button type="button" class="btn btn-outline-white" id="btnOpenB2BHow">Conocé cómo funciona</button>
+            </div>
+          </div>
+
+          <!-- 6 Beneficios para propietarios -->
+          <div class="b2b-benefits-grid">
+            
+            <div class="benefit-card">
+              <div class="benefit-icon"><i data-lucide="eye" style="width:20px;height:20px;"></i></div>
+              <div class="benefit-title">Mayor visibilidad</div>
+              <div class="benefit-desc">Llegá a conductores que planifican su recorrido hacia tu zona.</div>
+            </div>
+
+            <div class="benefit-card">
+              <div class="benefit-icon"><i data-lucide="users" style="width:20px;height:20px;"></i></div>
+              <div class="benefit-title">Nuevos clientes</div>
+              <div class="benefit-desc">Monetizá espacios libres en horarios de baja demanda.</div>
+            </div>
+
+            <div class="benefit-card">
+              <div class="benefit-icon"><i data-lucide="sliders" style="width:20px;height:20px;"></i></div>
+              <div class="benefit-title">Control de plazas</div>
+              <div class="benefit-desc">Administrá disponibilidad de plazas fijas y temporales.</div>
+            </div>
+
+            <div class="benefit-card">
+              <div class="benefit-icon"><i data-lucide="calendar-check" style="width:20px;height:20px;"></i></div>
+              <div class="benefit-title">Gestión de reservas</div>
+              <div class="benefit-desc">Validación digital y recepción ágil mediante códigos QR.</div>
+            </div>
+
+            <div class="benefit-card">
+              <div class="benefit-icon"><i data-lucide="bar-chart-3" style="width:20px;height:20px;"></i></div>
+              <div class="benefit-title">Estadísticas claras</div>
+              <div class="benefit-desc">Métricas de ocupación, horas pico e ingresos proyectados.</div>
+            </div>
+
+            <div class="benefit-card">
+              <div class="benefit-icon"><i data-lucide="sparkles" style="width:20px;height:20px;"></i></div>
+              <div class="benefit-title">Posicionamiento</div>
+              <div class="benefit-desc">Opciones de publicidad destacada para multiplicar visitas.</div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         8. SECCIÓN: CONFIANZA Y SEGURIDAD INSTITUCIONAL
+         ========================================================================= -->
+    <section class="section section-alt" id="confianza-seguridad">
+      <div class="container">
+        
+        <div class="section-header">
+          <span class="section-tag">Compromiso institucional</span>
+          <h2 class="section-title">Estacioná con total tranquilidad</h2>
+          <p class="section-desc">Diseñamos una plataforma orientada a la transparencia, el respeto al conductor y la seguridad de cada vehículo.</p>
+        </div>
+
+        <div class="trust-section-grid">
+          
+          <div class="trust-feature-card">
+            <div class="trust-feature-icon">
+              <i data-lucide="badge-check" style="width:28px;height:28px;"></i>
+            </div>
+            <h3 class="trust-feature-title">Estacionamientos verificados</h3>
+            <p class="trust-feature-desc">Auditamos la ubicación física, accesos e infraestructura de cada establecimiento adherido.</p>
+          </div>
+
+          <div class="trust-feature-card">
+            <div class="trust-feature-icon">
+              <i data-lucide="file-text" style="width:28px;height:28px;"></i>
+            </div>
+            <h3 class="trust-feature-title">Tarifas claras y transparentes</h3>
+            <p class="trust-feature-desc">Sin costos ocultos ni sorpresas al ingresar. Precios definidos antes de confirmar.</p>
+          </div>
+
+          <div class="trust-feature-card">
+            <div class="trust-feature-icon">
+              <i data-lucide="shield-alert" style="width:28px;height:28px;"></i>
+            </div>
+            <h3 class="trust-feature-title">Reservas con confirmación</h3>
+            <p class="trust-feature-desc">Comprobante digital con espacio asegurado en la franja horaria pactada.</p>
+          </div>
+
+          <div class="trust-feature-card">
+            <div class="trust-feature-icon">
+              <i data-lucide="headphones" style="width:28px;height:28px;"></i>
+            </div>
+            <h3 class="trust-feature-title">Asistencia al usuario</h3>
+            <p class="trust-feature-desc">Canales de atención directa para resolver dudas operativas o consultas de tu reserva.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================================
+       9. FOOTER — PIE DE PÁGINA PROFESIONAL
+       ========================================================================= -->
+  <footer class="parkia-footer">
+    <div class="container">
+      
+      <div class="footer-grid">
+        
+        <!-- Columna 1: PARKIA -->
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo" aria-label="PARKIA Inicio">
+            <div class="brand-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+              </svg>
+            </div>
+            <span class="brand-name">Parkia<span>.</span></span>
+          </a>
+          <p>Conectamos conductores con estacionamientos privados, comerciales y particulares en Buenos Aires, facilitando una movilidad predecible y segura.</p>
+          
+          <div class="social-links">
+            <a href="#" class="social-icon-btn" aria-label="LinkedIn"><i data-lucide="linkedin" style="width:16px;height:16px;"></i></a>
+            <a href="#" class="social-icon-btn" aria-label="Instagram"><i data-lucide="instagram" style="width:16px;height:16px;"></i></a>
+            <a href="#" class="social-icon-btn" aria-label="Twitter / X"><i data-lucide="twitter" style="width:16px;height:16px;"></i></a>
+          </div>
+        </div>
+
+        <!-- Columna 2: CONDUCTORES -->
+        <div>
+          <h4 class="footer-col-title">Conductores</h4>
+          <ul class="footer-links-list">
+            <li><a href="vistas/buscador.html">Buscar estacionamientos</a></li>
+            <li><a href="#como-funciona">Cómo funciona</a></li>
+            <li><a href="#ofertas-beneficios">Promociones y beneficios</a></li>
+            <li><a href="#confianza-seguridad">Preguntas frecuentes</a></li>
+            <li><a href="#confianza-seguridad">Centro de ayuda y soporte</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna 3: EMPRESAS -->
+        <div>
+          <h4 class="footer-col-title">Empresas</h4>
+          <ul class="footer-links-list">
+            <li><a href="#para-empresas">Publicar estacionamiento</a></li>
+            <li><a href="#para-empresas">Soluciones comerciales</a></li>
+            <li><a href="#para-empresas">Planes y posicionamiento</a></li>
+            <li><a href="#para-empresas">Integración de garajes</a></li>
+            <li><a href="#para-empresas">Portal de propietarios</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna 4: CONTACTO -->
+        <div>
+          <h4 class="footer-col-title">Contacto</h4>
+          <ul class="footer-links-list">
+            <li><span style="color:#CBD5E1; font-size:0.9375rem;">contacto@parkia.com</span></li>
+            <li><span style="color:#CBD5E1; font-size:0.9375rem;">Buenos Aires, Argentina</span></li>
+            <li><a href="#confianza-seguridad">Asistencia al conductor</a></li>
+            <li><a href="#para-empresas">Contacto comercial</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Barra inferior legal -->
+      <div class="footer-bottom">
+        <div>
+          © 2026 PARKIA. Todos los derechos reservados.
+        </div>
+        <div class="footer-legal-links">
+          <a href="#" onclick="alert('Términos y Condiciones institucionales en proceso de publicación.'); return false;">Términos y condiciones</a>
+          <a href="#" onclick="alert('Política de Privacidad y Protección de Datos conforme a normativas vigentes.'); return false;">Política de privacidad</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       MODAL: AUTENTICACIÓN (INICIAR SESIÓN / REGISTRO)
+       ========================================================================= -->
+  <div class="modal-backdrop" id="authModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Accedé a Parkia</h3>
+        <button class="modal-close-btn" aria-label="Cerrar modal"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="auth-tabs">
+          <button class="auth-tab-btn active" id="tabLoginBtn">Iniciar sesión</button>
+          <button class="auth-tab-btn" id="tabRegisterBtn">Registrarse</button>
+        </div>
+
+        <!-- Formulario Iniciar Sesión -->
+        <form id="formLogin">
+          <div class="form-group">
+            <label for="loginEmail">Correo electrónico</label>
+            <input type="email" id="loginEmail" class="form-input" placeholder="tu@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Contraseña</label>
+            <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">Ingresar</button>
+
+          <!-- Acceso Demo Rápido (Driver / Admin endpoints) -->
+          <div class="demo-login-box">
+            <div class="demo-login-title">Perfiles Demo de prueba rápida:</div>
+            <div class="demo-buttons-row">
+              <button type="button" class="btn-demo-quick" id="btnDemoDriver">Conductor Demo</button>
+              <button type="button" class="btn-demo-quick" id="btnDemoAdmin">Administrador Demo</button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Formulario Registro -->
+        <form id="formRegister" style="display:none;">
+          <div class="form-group">
+            <label for="regNombre">Nombre</label>
+            <input type="text" id="regNombre" class="form-input" placeholder="Juan" required />
+          </div>
+          <div class="form-group">
+            <label for="regApellido">Apellido</label>
+            <input type="text" id="regApellido" class="form-input" placeholder="Pérez" required />
+          </div>
+          <div class="form-group">
+            <label for="regEmail">Correo electrónico</label>
+            <input type="email" id="regEmail" class="form-input" placeholder="juan.perez@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="regPassword">Contraseña</label>
+            <input type="password" id="regPassword" class="form-input" placeholder="Mínimo 8 caracteres" required />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">Crear cuenta</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: ONBOARDING PARA PROPIETARIOS Y EMPRESAS (B2B)
+       ========================================================================= -->
+  <div class="modal-backdrop" id="b2bModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Publicá tu estacionamiento</h3>
+        <button class="modal-close-btn" aria-label="Cerrar modal"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.875rem; color:var(--text-secondary); margin-bottom:18px;">
+          Completá los datos de tu establecimiento y nuestro equipo comercial se contactará para activar tu espacio en PARKIA.
+        </p>
+        <form id="formB2BLead">
+          <div class="form-group">
+            <label for="b2bEstName">Nombre del garaje o establecimiento</label>
+            <input type="text" id="b2bEstName" class="form-input" placeholder="Ej: Garage San Telmo Central" required />
+          </div>
+          <div class="form-group">
+            <label for="b2bAddress">Dirección y Barrio en CABA</label>
+            <input type="text" id="b2bAddress" class="form-input" placeholder="Ej: Defensa 1100, San Telmo" required />
+          </div>
+          <div class="form-group">
+            <label for="b2bPlazas">Cantidad aproximada de plazas</label>
+            <input type="number" id="b2bPlazas" class="form-input" placeholder="Ej: 45" min="1" required />
+          </div>
+          <div class="form-group">
+            <label for="b2bContact">Teléfono o WhatsApp de contacto</label>
+            <input type="tel" id="b2bContact" class="form-input" placeholder="+54 11 5555-0000" required />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; margin-top:8px;">Enviar solicitud de alta</button>
+          <div id="b2bSuccessMsg" style="display:none; margin-top:12px; padding:10px; border-radius:8px; background:var(--emerald-light); color:var(--emerald-dark); font-size:0.875rem; text-align:center;">
+            ✓ ¡Solicitud enviada con éxito! Nos comunicaremos a la brevedad.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: CÓMO FUNCIONA PARA EMPRESAS
+       ========================================================================= -->
+  <div class="modal-backdrop" id="b2bHowModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Cómo funciona para garajes</h3>
+        <button class="modal-close-btn" aria-label="Cerrar modal"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; gap:14px; align-items:flex-start;">
+            <div style="width:32px; height:32px; border-radius:8px; background:var(--amber-primary); color:var(--navy-deep); font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;">1</div>
+            <div>
+              <strong style="color:var(--navy-deep); font-size:0.9375rem;">Registrá tu establecimiento</strong>
+              <p style="color:var(--text-secondary); font-size:0.8125rem; margin-top:4px;">Cargás la información de tu garaje, horarios, tarifas y características de seguridad.</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:14px; align-items:flex-start;">
+            <div style="width:32px; height:32px; border-radius:8px; background:var(--amber-primary); color:var(--navy-deep); font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;">2</div>
+            <div>
+              <strong style="color:var(--navy-deep); font-size:0.9375rem;">Publicá tus plazas disponibles</strong>
+              <p style="color:var(--text-secondary); font-size:0.8125rem; margin-top:4px;">Definís cuántos espacios querés poner a disposición y administrás tu ocupación en tiempo real.</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:14px; align-items:flex-start;">
+            <div style="width:32px; height:32px; border-radius:8px; background:var(--amber-primary); color:var(--navy-deep); font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;">3</div>
+            <div>
+              <strong style="color:var(--navy-deep); font-size:0.9375rem;">Recibí conductores y cobrá</strong>
+              <p style="color:var(--text-secondary); font-size:0.8125rem; margin-top:4px;">Validá el acceso del conductor con código QR y cobrá de forma asegurada y periódica.</p>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:24px; text-align:center;">
+          <button type="button" class="btn btn-primary" onclick="document.getElementById('b2bHowModal').classList.remove('show'); document.getElementById('b2bModal').classList.add('show');" style="width:100%;">
+            Quiero registrar mi garaje
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lucide Icons Library -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- Lógica e interacción del Home -->
+  <script src="js/home.js"></script>
+</body>
+</html>
