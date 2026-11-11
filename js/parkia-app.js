@@ -549,79 +549,45 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // 4.1 Actualizar Sidebar Principal (Columna derecha)
+    const sidebarPanel = document.getElementById('parkingDetailSidebar');
+    if (sidebarPanel) sidebarPanel.style.display = 'flex';
+
     const sidebarMainImg = document.getElementById('sidebarMainImg');
-    const galleryCounter = document.getElementById('galleryCounter');
+    const sidebarStatusText = document.getElementById('sidebarStatusText');
     const sidebarTitle = document.getElementById('sidebarTitle');
     const sidebarRating = document.getElementById('sidebarRating');
     const sidebarReviews = document.getElementById('sidebarReviews');
-    const sidebarStatus = document.getElementById('sidebarStatus');
     const sidebarAddress = document.getElementById('sidebarAddress');
     const sidebarDistance = document.getElementById('sidebarDistance');
     const sidebarFeatures = document.getElementById('sidebarFeatures');
-    const sidebarFraction = document.getElementById('sidebarFraction');
     const sidebarPrice = document.getElementById('sidebarPrice');
-    const sidebarStay12 = document.getElementById('sidebarStay12');
-    const sidebarStay24 = document.getElementById('sidebarStay24');
-    const sidebarProgressFill = document.getElementById('sidebarProgressFill');
-    const sidebarOccupiedPercent = document.getElementById('sidebarOccupiedPercent');
-    const sidebarAvailableText = document.getElementById('sidebarAvailableText');
-    const thumbsContainer = document.getElementById('galleryThumbsContainer');
+    const btnHowToReach = document.getElementById('btnHowToReach');
 
     if (sidebarMainImg && spot.photos && spot.photos.length > 0) {
       sidebarMainImg.src = spot.photos[0];
     }
-    if (galleryCounter) {
-      galleryCounter.textContent = `1/${spot.photos.length}`;
+    if (sidebarStatusText) {
+      sidebarStatusText.textContent = spot.statusText || 'Disponible';
     }
-
-    // Miniaturas (4 fotos)
-    if (thumbsContainer && spot.photos) {
-      thumbsContainer.innerHTML = '';
-      const thumbsCount = Math.min(4, spot.photos.length);
-      for (let i = 0; i < thumbsCount; i++) {
-        const thumbBtn = document.createElement('button');
-        thumbBtn.type = 'button';
-        thumbBtn.className = `thumb-item-btn ${i === 0 ? 'active' : ''}`;
-        thumbBtn.setAttribute('aria-label', `Ver foto ${i + 1}`);
-        thumbBtn.innerHTML = `<img src="${spot.photos[i]}" alt="${spot.name} miniatura ${i + 1}" />`;
-        thumbBtn.addEventListener('click', () => {
-          switchGalleryPhoto(i);
-        });
-        thumbsContainer.appendChild(thumbBtn);
-      }
-    }
-
     if (sidebarTitle) sidebarTitle.textContent = spot.name;
     if (sidebarRating) sidebarRating.textContent = spot.rating;
-    if (sidebarReviews) sidebarReviews.textContent = `(${spot.reviews} reseñas)`;
-    if (sidebarStatus) sidebarStatus.textContent = spot.statusText;
+    if (sidebarReviews) sidebarReviews.textContent = `(${spot.reviews} opiniones)`;
     if (sidebarAddress) sidebarAddress.textContent = spot.address;
-    if (sidebarDistance) sidebarDistance.textContent = spot.distance;
+    if (sidebarDistance) sidebarDistance.textContent = `a ${spot.distance}`;
+    if (sidebarPrice) sidebarPrice.textContent = formatMoney(spot.price);
 
-    // Características pills
+    if (btnHowToReach) {
+      btnHowToReach.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(spot.address || spot.name)}`;
+    }
+
+    // Chips limpios con iconos
     if (sidebarFeatures && spot.features) {
       sidebarFeatures.innerHTML = spot.features.map(f => `
-        <span class="feature-pill-item">
-          ${getFeatureIcon(f.icon)} ${f.label}
+        <span class="feature-chip-clean">
+          ${getFeatureIcon(f.icon)}
+          <span>${f.label}</span>
         </span>
       `).join('');
-    }
-
-    // Tarifas
-    if (sidebarFraction) sidebarFraction.textContent = formatMoney(spot.fraction);
-    if (sidebarPrice) sidebarPrice.textContent = formatMoney(spot.price);
-    if (sidebarStay12) sidebarStay12.textContent = formatMoney(spot.stay12);
-    if (sidebarStay24) sidebarStay24.textContent = formatMoney(spot.stay24);
-
-    // Capacidad en vivo
-    if (sidebarProgressFill) {
-      sidebarProgressFill.style.width = `${spot.occupiedPercent}%`;
-    }
-    if (sidebarOccupiedPercent) {
-      sidebarOccupiedPercent.textContent = `${spot.occupiedPercent}% ocupado`;
-    }
-    if (sidebarAvailableText) {
-      sidebarAvailableText.textContent = `¡Solo quedan ${spot.availableSpots} cocheras!`;
     }
 
     // 4.2 Actualizar Mini Tarjeta Flotante (Inferior Izquierda del Mapa)
@@ -1265,6 +1231,14 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Eventos de botones abrir/cerrar
+  const btnCloseSidebar = document.getElementById('btnCloseSidebar');
+  if (btnCloseSidebar) {
+    btnCloseSidebar.addEventListener('click', () => {
+      const sidebarPanel = document.getElementById('parkingDetailSidebar');
+      if (sidebarPanel) sidebarPanel.style.display = 'none';
+    });
+  }
+
   if (btnBookSidebar) {
     btnBookSidebar.addEventListener('click', (e) => {
       e.preventDefault();
